@@ -11,5 +11,3 @@ public class ProfessorAllocationBackEnd {
 	}
 
 }
-//* teste marcos*//
-//TEste Ronaldo
