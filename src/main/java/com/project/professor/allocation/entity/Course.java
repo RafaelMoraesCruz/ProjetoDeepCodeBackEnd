@@ -8,11 +8,12 @@ import javax.persistence.Id;
 
 @Entity
 public class Course {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column(name = "name",nullable=false)
 	private String name;
 
 	public Course() {

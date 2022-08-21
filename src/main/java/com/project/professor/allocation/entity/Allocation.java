@@ -14,7 +14,9 @@ public class Allocation {
 	private Date start;
 	private Date end;
 	private Long courseId;
+//	private Course course;
 	private Long professorId;
+//	private Professor professor;
 
 	public Allocation() {
 		super();
