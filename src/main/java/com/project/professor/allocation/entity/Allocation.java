@@ -33,18 +33,18 @@ public class Allocation {
 	@Column(name = "End", nullable = false)
 	private Date end;
 
-	@Column(name = "Couser_ID", nullable = false)
+	@Column(name = "Course_id", nullable = false)
 	private Long courseId;
 
 	@ManyToOne
-	@JoinColumn(name = "Couser_ID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "Course_id", nullable = false, insertable = false, updatable = false)
 	private Course course;
 
-	@Column(name = "Professor_ID", nullable = false)
+	@Column(name = "Professor_id", nullable = false)
 	private Long professorId;
 
 	@ManyToOne
-	@JoinColumn(name = "Professor_ID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "Professor_id", nullable = false, insertable = false, updatable = false)
 	private Professor professor;
 
 	public Allocation() {
