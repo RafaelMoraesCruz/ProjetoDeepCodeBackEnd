@@ -27,8 +27,6 @@ public class Professor {
 	@ManyToOne
 	@JoinColumn(name = "department_id", nullable = false, insertable = false, updatable = false)
 	private Department department;
-	
-	
 
 	public Professor() {
 		super();
@@ -79,8 +77,7 @@ public class Professor {
 		return "Professor [id=" + id + ", name=" + name + ", cpf=" + cpf + ", departmentId=" + departmentId
 				+ ", department=" + department + "]";
 	}
-	
+
 //	comentario
-	
 
 }
