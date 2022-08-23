@@ -33,8 +33,8 @@ public class ProfessorRepositoryTest {
 //	read
 	@Test
 	public void findById() {
-		Optional<Professor> listProfessor = professorRepository.findById(1l);
-		listProfessor.stream().forEach(System.out::println);
+		Optional<Professor> professor = professorRepository.findById(4l);
+		System.out.println(professor.orElse(null));
 	}
 	
 //	create
