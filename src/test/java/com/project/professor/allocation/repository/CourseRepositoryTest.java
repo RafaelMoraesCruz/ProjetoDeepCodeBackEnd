@@ -17,7 +17,6 @@ import com.project.professor.allocation.entity.Course;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 @TestPropertySource(locations = "classpath:application.properties")
-
 public class CourseRepositoryTest {
 
 	@Autowired
@@ -30,7 +29,7 @@ public class CourseRepositoryTest {
 	}
 
 	@Test
-	public void FindyById() {
+	public void findyById() {
 		Optional<Course> findId = courseRepository.findById(1l);
 		System.out.println(findId.orElse(null));
 
@@ -50,7 +49,7 @@ public class CourseRepositoryTest {
 	@Test
 	public void create() {
 		Course course = new Course();
-		course.setName("espanhol");
+		course.setName("Java");
 		courseRepository.save(course);
 
 	}

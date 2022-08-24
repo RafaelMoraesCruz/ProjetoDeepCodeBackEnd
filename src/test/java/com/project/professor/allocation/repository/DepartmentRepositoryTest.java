@@ -43,7 +43,7 @@ public class DepartmentRepositoryTest {
 	public void createDepartment() {
 
 		Department dpt = new Department();
-		dpt.setName("Department of Financeiro");
+		dpt.setName("Departamento de Fisica");
 
 		departmentRepository.save(dpt);
 
