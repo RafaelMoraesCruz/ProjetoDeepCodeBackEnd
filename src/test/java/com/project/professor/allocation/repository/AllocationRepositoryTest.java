@@ -25,6 +25,7 @@ import com.project.professor.allocation.entity.Allocation;
 public class AllocationRepositoryTest {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("HH:mmZ");
+
 	@Autowired
 	AllocationRepository allocationRepository;
 
@@ -64,8 +65,8 @@ public class AllocationRepositoryTest {
 		allocation.setDay(DayOfWeek.SUNDAY);
 		allocation.setStart(sdf.parse("08:00-0300"));
 		allocation.setEnd(sdf.parse("18:00-0300"));
-		allocation.setProfessorId(2l);
-		allocation.setCourseId(2l);
+		allocation.setProfessorId(2L);
+		allocation.setCourseId(3L);
 
 		allocation = allocationRepository.save(allocation);
 
