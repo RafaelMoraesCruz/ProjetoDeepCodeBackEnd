@@ -57,8 +57,8 @@ public class CourseRepositoryTest {
 	@Test
 	public void update() {
 		Course course = new Course();
-		course.setName("espanhol");
-		course.setId(4l);
+		course.setName("c++");
+		course.setId(3l);
 		courseRepository.save(course);
 
 	}
