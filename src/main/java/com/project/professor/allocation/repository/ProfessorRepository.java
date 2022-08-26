@@ -11,9 +11,9 @@ import com.project.professor.allocation.entity.Professor;
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 	
-	Optional<Professor> FindByDepartmentId (Long departmentId);
+	Optional<Professor> findByDepartmentId (Long departmentId);
 	
-	Optional<Professor> FindByCpf (String cpf);
+	Optional<Professor> findByCpf (String cpf);
 	
 	List<Professor> findByNameContaining(String name);
 

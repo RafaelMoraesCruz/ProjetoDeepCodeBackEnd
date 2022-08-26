@@ -31,11 +31,11 @@ public class ProfessorService {
 	}
 
 	public Optional<Professor> findByCpf(String cpf) {
-		return professorRepository.FindByCpf(cpf);
+		return professorRepository.findByCpf(cpf);
 	}
 
 	public Optional<Professor> findByDepartmentId(Long departmentId) {
-		return professorRepository.FindByDepartmentId(departmentId);
+		return professorRepository.findByDepartmentId(departmentId);
 	}
 
 	public Professor save(Professor professor) {
