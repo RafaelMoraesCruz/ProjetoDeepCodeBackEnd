@@ -19,6 +19,11 @@ public class DepartmentService {
 		this.departmentRepository = departmentRepository;
 	}
 
+	public List<Department> findByNameContaining(String name) {
+		return departmentRepository.findByNameContaining(name);
+
+	}
+
 	public Optional<Department> findById(Long id) {
 		return departmentRepository.findById(id);
 	}
@@ -32,7 +37,7 @@ public class DepartmentService {
 		return departmentRepository.save(department);
 	}
 
-	public Department upadate(Department department) throws ServiceDepartmentException {
+	public Department update(Department department) throws ServiceDepartmentException {
 		if (department.getId() != null && departmentRepository.existsById(department.getId())) {
 			return departmentRepository.save(department);
 		} else {
@@ -40,7 +45,7 @@ public class DepartmentService {
 		}
 	}
 
-	public void deletById(Long id) throws ServiceDepartmentException {
+	public void deleteById(Long id) throws ServiceDepartmentException {
 		if (id != null && departmentRepository.existsById(id)) {
 			departmentRepository.deleteById(id);
 		} else {
@@ -48,9 +53,8 @@ public class DepartmentService {
 		}
 	}
 
-	public List<Department> findByNameContaining(String name) {
-		return departmentRepository.findByNameContaining(name);
-
+	public void deleteAll() {
+		departmentRepository.deleteAll();
 	}
 
 }

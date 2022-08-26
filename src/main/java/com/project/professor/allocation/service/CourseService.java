@@ -39,4 +39,25 @@ public class CourseService {
 
 	}
 
+	public Course update(Course course) {
+		if (course.getId() != null && courseRepository.existsById(course.getId())) {
+			return courseRepository.save(course);
+		} else {
+			return null; // exception aqui
+		}
+	}
+
+	public void deleteById(Long id) {
+		if (id != null && courseRepository.existsById(id)) {
+			courseRepository.deleteById(id);
+		} else {
+			// exception aqui
+		}
+	}
+
+	public void deleteAll() {
+		courseRepository.deleteAll();
+		;
+	}
+
 }
