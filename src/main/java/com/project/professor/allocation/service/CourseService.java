@@ -1,6 +1,7 @@
 package com.project.professor.allocation.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,22 @@ public class CourseService {
 
 	public List<Course> findByNameContaining(String name) {
 		return courseRepository.findByNameContaining(name);
+
+	}
+
+	public List<Course> findAll() {
+		return courseRepository.findAll();
+
+	}
+
+	public Optional<Course> findById(Long id) {
+		return courseRepository.findById(2L);
+
+	}
+
+	public Course save(Course course) {
+		course.setId(null);
+		return courseRepository.save(course);
 
 	}
 
