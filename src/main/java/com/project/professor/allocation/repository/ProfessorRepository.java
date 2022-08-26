@@ -15,6 +15,6 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 	
 	Optional<Professor> FindByCpf (String cpf);
 	
-	List<Professor> FindByNameLike (String name);
+	List<Professor> findByNameContaining(String name);
 
 }

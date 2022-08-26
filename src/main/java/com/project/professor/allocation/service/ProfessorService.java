@@ -22,8 +22,8 @@ public class ProfessorService {
 		return professorRepository.findAll();
 	}
 	
-	public List<Professor> findByNameLike(String name){
-		return professorRepository.FindByNameLike(name);	
+	public List<Professor> findByNameContaining(String name){
+		return professorRepository.findByNameContaining(name);	
 	}
 	
 	public Optional<Professor> findById(Long id) {
