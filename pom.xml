@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.project</groupId>
-	<artifactId>professor-allocation-rafael</artifactId>
+	<artifactId>ProjetoDeepCodeBackEnd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>professor-allocation-rafael</name>
+	<name>ProjetoDeepCodeBackEnd</name>
 	<description>professor allocation server</description>
 	<properties>
 		<java.version>1.8</java.version>
