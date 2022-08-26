@@ -1,10 +1,10 @@
 package com.project.professor.allocation.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.entity.Professor;
 import com.project.professor.allocation.repository.ProfessorRepository;
 
@@ -12,10 +12,11 @@ import com.project.professor.allocation.repository.ProfessorRepository;
 public class ProfessorService {
 
 	private final ProfessorRepository professorRepository;
+	private final DepartmentService departmentService;
 
-	public ProfessorService(ProfessorRepository professorRepository) {
-		super();
+	public ProfessorService(ProfessorRepository professorRepository, DepartmentService departmentService) {
 		this.professorRepository = professorRepository;
+		this.departmentService = departmentService;
 	}
 
 	public List<Professor> findAll() {
@@ -26,38 +27,49 @@ public class ProfessorService {
 		return professorRepository.findByNameContaining(name);
 	}
 
-	public Optional<Professor> findById(Long id) {
-		return professorRepository.findById(id);
+	public Professor findById(Long id) {
+		return professorRepository.findById(id).orElse(null);
 	}
 
-	public Optional<Professor> findByCpf(String cpf) {
-		return professorRepository.findByCpf(cpf);
+	public Professor findByCpf(String cpf) {
+		return professorRepository.findByCpf(cpf).orElse(null);
 	}
 
-	public Optional<Professor> findByDepartmentId(Long departmentId) {
+	public List<Professor> findByDepartmentId(Long departmentId) {
 		return professorRepository.findByDepartmentId(departmentId);
 	}
 
 	public Professor save(Professor professor) {
 		professor.setId(null);
-		return professorRepository.save(professor);
+		return saveInternal(professor);
 	}
 
 	public Professor update(Professor professor) {
 		if (professor.getId() != null && professorRepository.existsById(professor.getId())) {
-			return professorRepository.save(professor);
+			return saveInternal(professor);
 		} else
-			return null; // exception aqui
+			return null;
 	}
 
 	public void deleteById(Long id) {
 		if (id != null && professorRepository.existsById(id)) {
 			professorRepository.deleteById(id);
-		} // exception aqui
+		}
 	}
 
 	public void deleteAll() {
 		professorRepository.deleteAll();
+	}
+
+	public Professor saveInternal(Professor professor) {
+
+		Long dptId = professor.getDepartmentId();
+		Department dpt = departmentService.findById(dptId).orElse(null); // ajeitar department service optional!
+
+		Professor prof = professorRepository.save(professor);
+		prof.setDepartment(dpt);
+
+		return prof;
 	}
 
 }
