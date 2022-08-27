@@ -5,7 +5,7 @@ public class ServiceDepartmentException extends Exception {
 	private String serviceDepartmentExpetion;
 	
 	public ServiceDepartmentException(String serviceNameNotExistExpetion) {
-		super("Department doen't exist");
+		super("Department doesn't exist");
 		this.serviceDepartmentExpetion = serviceNameNotExistExpetion;
 
 	}

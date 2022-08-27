@@ -3,10 +3,12 @@ package com.project.professor.allocation.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.repository.CourseRepository;
+import com.project.professor.allocation.service.exception.ServiceCourseException;
 
 @Service
 public class CourseService {
@@ -39,19 +41,19 @@ public class CourseService {
 
 	}
 
-	public Course update(Course course) {
+	public Course update(Course course) throws ServiceCourseException {
 		if (course.getId() != null && courseRepository.existsById(course.getId())) {
 			return courseRepository.save(course);
 		} else {
-			return null; // exception aqui
+			throw new ServiceCourseException("Course doesn't find");
 		}
 	}
 
-	public void deleteById(Long id) {
+	public void deleteById(Long id) throws ServiceCourseException {
 		if (id != null && courseRepository.existsById(id)) {
 			courseRepository.deleteById(id);
 		} else {
-			// exception aqui
+			throw new ServiceCourseException("Course doesn't find");
 		}
 	}
 
