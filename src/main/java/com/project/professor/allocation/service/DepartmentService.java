@@ -24,8 +24,8 @@ public class DepartmentService {
 
 	}
 
-	public Optional<Department> findById(Long id) {
-		return departmentRepository.findById(id);
+	public Department findById(Long id) {
+		return departmentRepository.findById(id).orElse(null);
 	}
 
 	public List<Department> findAll() {
@@ -54,7 +54,7 @@ public class DepartmentService {
 	}
 
 	public void deleteAll() {
-		departmentRepository.deleteAll();
+		departmentRepository.deleteAllInBatch();
 	}
 
 }

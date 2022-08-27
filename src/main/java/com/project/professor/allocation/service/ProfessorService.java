@@ -1,6 +1,7 @@
 package com.project.professor.allocation.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -61,13 +62,13 @@ public class ProfessorService {
 	}
 
 	public void deleteAll() {
-		professorRepository.deleteAll();
+		professorRepository.deleteAllInBatch();
 	}
 
 	public Professor saveInternal(Professor professor) {
 
 		Long dptId = professor.getDepartmentId();
-		Department dpt = departmentService.findById(dptId).orElse(null); // ajeitar department service optional!
+		Department dpt = departmentService.findById(dptId);
 
 		Professor prof = professorRepository.save(professor);
 		prof.setDepartment(dpt);

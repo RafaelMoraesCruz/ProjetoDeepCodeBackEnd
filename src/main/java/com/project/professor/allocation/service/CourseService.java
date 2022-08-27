@@ -30,8 +30,8 @@ public class CourseService {
 
 	}
 
-	public Optional<Course> findById(Long id) {
-		return courseRepository.findById(2L);
+	public Course findById(Long id) {
+		return courseRepository.findById(2L).orElse(null);
 
 	}
 
@@ -58,7 +58,7 @@ public class CourseService {
 	}
 
 	public void deleteAll() {
-		courseRepository.deleteAll();
+		courseRepository.deleteAllInBatch();
 		;
 	}
 

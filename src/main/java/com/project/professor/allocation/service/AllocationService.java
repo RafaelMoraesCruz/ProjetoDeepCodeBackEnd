@@ -27,8 +27,8 @@ public class AllocationService {
 		return allocationRepository.findByCourseId(courseId);
 	}
 	
-	public Optional<Allocation> findById(Long Id) {
-		return allocationRepository.findById(Id);
+	public Allocation findById(Long Id) {
+		return allocationRepository.findById(Id).orElse(null);
 	}
 	
 	public List<Allocation> findAll(){
