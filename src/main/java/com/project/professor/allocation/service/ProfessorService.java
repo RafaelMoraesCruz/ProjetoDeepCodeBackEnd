@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.entity.Professor;
 import com.project.professor.allocation.repository.ProfessorRepository;
+import com.project.professor.allocation.service.exception.ServiceNameNotExistExpetionException;
 
 @Service
 public class ProfessorService {
@@ -44,16 +45,18 @@ public class ProfessorService {
 		return saveInternal(professor);
 	}
 
-	public Professor update(Professor professor) {
+	public Professor update(Professor professor) throws ServiceNameNotExistExpetionException {
 		if (professor.getId() != null && professorRepository.existsById(professor.getId())) {
 			return saveInternal(professor);
 		} else
-			return null;
+			throw new ServiceNameNotExistExpetionException("Professor doesn't exist");
 	}
 
-	public void deleteById(Long id) {
+	public void deleteById(Long id) throws ServiceNameNotExistExpetionException {
 		if (id != null && professorRepository.existsById(id)) {
 			professorRepository.deleteById(id);
+		}else {
+			throw new ServiceNameNotExistExpetionException("Professor doesn't exist");
 		}
 	}
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.entity.Allocation;
 import com.project.professor.allocation.repository.AllocationRepository;
+import com.project.professor.allocation.service.exception.ServiceNameNotExistExpetionException;
 
 @Service
 public class AllocationService {
@@ -40,21 +41,21 @@ public class AllocationService {
     	
     }
     
-    public Allocation update (Allocation allocation) {
+    public Allocation update (Allocation allocation) throws ServiceNameNotExistExpetionException {
     	if (allocation.getId() != null && allocationRepository.existsById(allocation.getId())){
     	return allocationRepository.save(allocation);
     	}else { 
-    		return null;//exception aqui
+    		throw new ServiceNameNotExistExpetionException("Allocation doesn't exist");
     	}}
     public void deleteAll () {
      allocationRepository.deleteAll();
     }
     
-    public void deleteById(Long id) {
+	public void deleteById(Long id) throws ServiceNameNotExistExpetionException {
     	if (id != null && allocationRepository.existsById(id)) {
     		allocationRepository.deleteById(id);
 		} else {
-			// exception aqui
+			throw new ServiceNameNotExistExpetionException("Allocation doesn't exist");
 		}
     }
     	
