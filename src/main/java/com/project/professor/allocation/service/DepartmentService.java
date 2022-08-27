@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.repository.DepartmentRepository;
-import com.project.professor.allocation.service.exception.ServiceNameNotExistExpetionException;
+import com.project.professor.allocation.service.exception.ServiceNameNotExistException;
 
 @Service
 public class DepartmentService {
@@ -37,19 +37,19 @@ public class DepartmentService {
 		return departmentRepository.save(department);
 	}
 
-	public Department update(Department department) throws ServiceNameNotExistExpetionException {
+	public Department update(Department department) throws ServiceNameNotExistException {
 		if (department.getId() != null && departmentRepository.existsById(department.getId())) {
 			return departmentRepository.save(department);
 		} else {
-			throw new ServiceNameNotExistExpetionException("Department doenst exists");
+			throw new ServiceNameNotExistException("Department doenst exists");
 		}
 	}
 
-	public void deleteById(Long id) throws ServiceNameNotExistExpetionException {
+	public void deleteById(Long id) throws ServiceNameNotExistException {
 		if (id != null && departmentRepository.existsById(id)) {
 			departmentRepository.deleteById(id);
 		} else {
-			throw new ServiceNameNotExistExpetionException("Department ID doesnt exists");
+			throw new ServiceNameNotExistException("Department ID doesnt exists");
 		}
 	}
 

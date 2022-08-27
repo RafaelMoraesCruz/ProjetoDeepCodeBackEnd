@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.repository.CourseRepository;
-import com.project.professor.allocation.service.exception.ServiceNameNotExistExpetionException;
+import com.project.professor.allocation.service.exception.ServiceNameNotExistException;
 
 @Service
 public class CourseService {
@@ -41,19 +41,19 @@ public class CourseService {
 
 	}
 
-	public Course update(Course course) throws ServiceNameNotExistExpetionException {
+	public Course update(Course course) throws ServiceNameNotExistException {
 		if (course.getId() != null && courseRepository.existsById(course.getId())) {
 			return courseRepository.save(course);
 		} else {
-			throw new ServiceNameNotExistExpetionException("Course doesn't find");
+			throw new ServiceNameNotExistException("Course doesn't find");
 		}
 	}
 
-	public void deleteById(Long id) throws ServiceNameNotExistExpetionException {
+	public void deleteById(Long id) throws ServiceNameNotExistException {
 		if (id != null && courseRepository.existsById(id)) {
 			courseRepository.deleteById(id);
 		} else {
-			throw new ServiceNameNotExistExpetionException("Course doesn't find");
+			throw new ServiceNameNotExistException("Course doesn't find");
 		}
 	}
 

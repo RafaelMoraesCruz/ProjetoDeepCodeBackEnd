@@ -1,10 +1,10 @@
 package com.project.professor.allocation.service.exception;
 
-public class ServiceNameNotExistExpetionException extends Exception {
+public class ServiceNameNotExistException extends Exception {
 	
 	private String serviceNameNotExistExpetion;
 	
-	public ServiceNameNotExistExpetionException(String serviceNameNotExistExpetion) {
+	public ServiceNameNotExistException(String serviceNameNotExistExpetion) {
 		super("Doesn't exist");
 		this.serviceNameNotExistExpetion = serviceNameNotExistExpetion;
 
