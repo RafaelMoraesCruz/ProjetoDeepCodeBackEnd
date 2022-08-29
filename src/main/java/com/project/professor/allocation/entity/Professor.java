@@ -77,7 +77,4 @@ public class Professor {
 		return "Professor [id=" + id + ", name=" + name + ", cpf=" + cpf + ", departmentId=" + departmentId
 				+ ", department=" + department + "]";
 	}
-
-//	comentario
-
 }
