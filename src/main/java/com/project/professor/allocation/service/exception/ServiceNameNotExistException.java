@@ -4,9 +4,13 @@ public class ServiceNameNotExistException extends Exception {
 	
 	private String serviceNameNotExistExpetion;
 	
-	public ServiceNameNotExistException(String serviceNameNotExistExpetion) {
-		super("Doesn't exist");
-		this.serviceNameNotExistExpetion = serviceNameNotExistExpetion;
+//	public ServiceNameNotExistException(String msg, Throwable cause) {
+//		super(msg, cause);
+//
+//	}
+
+	public ServiceNameNotExistException(String msg) {
+		super(msg);
 
 	}
 
