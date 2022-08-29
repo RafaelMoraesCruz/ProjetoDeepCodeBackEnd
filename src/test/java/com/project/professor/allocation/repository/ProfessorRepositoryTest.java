@@ -12,6 +12,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
 import com.project.professor.allocation.entity.Professor;
+import com.project.professor.allocation.service.exception.ServiceCpfDoesNotExistException;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -37,6 +38,17 @@ public class ProfessorRepositoryTest {
 		System.out.println(professor.orElse(null));
 	}
 	
+	@Test
+	public void findByCpf() throws ServiceCpfDoesNotExistException {
+		String cpf = "1112223";
+		Professor prof = professorRepository.findByCpf(cpf).orElse(null);
+		if (prof != null) {
+			System.out.println(prof);
+		} else {
+			throw new ServiceCpfDoesNotExistException("Cpf não cadastrado");
+		}
+	}
+	
 //	create
 	@Test
 	public void create() {
@@ -58,7 +70,7 @@ public class ProfessorRepositoryTest {
 	
 //	delete
 	@Test
-	public void delete() {
+	public void deleteById() {
 		professorRepository.deleteById(1l);
 	}
 	
