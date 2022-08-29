@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.entity.Professor;
 import com.project.professor.allocation.repository.ProfessorRepository;
-import com.project.professor.allocation.service.exception.ServiceCpfDoesNotExistException;
 import com.project.professor.allocation.service.exception.ServiceNameNotExistException;
 
 @Service
@@ -44,12 +43,12 @@ public class ProfessorService {
 		}
 	}
 
-	public Professor findByCpf(String cpf) throws ServiceCpfDoesNotExistException {
+	public Professor findByCpf(String cpf) throws ServiceNameNotExistException {
 		Professor prof = professorRepository.findByCpf(cpf).orElse(null);
 		if (prof != null) {
 			return prof;
 		} else {
-			throw new ServiceCpfDoesNotExistException("cpf Does not exists in table professor");
+			throw new ServiceNameNotExistException("cpf Does not exists in table professor");
 		}
 	}
 
