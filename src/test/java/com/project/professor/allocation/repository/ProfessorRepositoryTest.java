@@ -45,7 +45,7 @@ public class ProfessorRepositoryTest {
 		if (prof != null) {
 			System.out.println(prof);
 		} else {
-			throw new ServiceCpfDoesNotExistException("Cpf não cadastrado");
+			throw new ServiceCpfDoesNotExistException("Cpf não encontrado no banco de dados");
 		}
 	}
 	

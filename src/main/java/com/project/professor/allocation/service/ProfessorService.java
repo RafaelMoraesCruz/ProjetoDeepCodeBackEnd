@@ -49,7 +49,7 @@ public class ProfessorService {
 		if (prof != null) {
 			return prof;
 		} else {
-			throw new ServiceCpfDoesNotExistException("Cpf doesn't exist");
+			throw new ServiceCpfDoesNotExistException("cpf Does not exists in table professor");
 		}
 	}
 
