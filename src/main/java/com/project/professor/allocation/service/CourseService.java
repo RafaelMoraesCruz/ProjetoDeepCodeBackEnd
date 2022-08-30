@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.repository.CourseRepository;
-import com.project.professor.allocation.service.exception.ServiceNameNotExistException;
+import com.project.professor.allocation.service.exception.ServiceNotFindException;
 
 import net.bytebuddy.implementation.bytecode.Throw;
 
@@ -22,12 +22,12 @@ public class CourseService {
 		this.courseRepository = courseRepository;
 	}
 
-	public Course findByCourseId(Long courseId) throws ServiceNameNotExistException {
+	public Course findByCourseId(Long courseId) throws ServiceNotFindException {
 		Course course = courseRepository.findById(courseId).orElse(null);
 		if (course != null) {
 			return course;
 		}else {
-			throw new ServiceNameNotExistException("Course not find");
+			throw new ServiceNotFindException("Course not find");
 		}
 	}
 
@@ -52,19 +52,19 @@ public class CourseService {
 
 	}
 
-	public Course update(Course course) throws ServiceNameNotExistException {
+	public Course update(Course course) throws ServiceNotFindException {
 		if (course.getId() != null && courseRepository.existsById(course.getId())) {
 			return courseRepository.save(course);
 		} else {
-			throw new ServiceNameNotExistException("Course doesn't find");
+			throw new ServiceNotFindException("Course doesn't find");
 		}
 	}
 
-	public void deleteById(Long id) throws ServiceNameNotExistException {
+	public void deleteById(Long id) throws ServiceNotFindException {
 		if (id != null && courseRepository.existsById(id)) {
 			courseRepository.deleteById(id);
 		} else {
-			throw new ServiceNameNotExistException("Course doesn't find");
+			throw new ServiceNotFindException("Course doesn't find");
 		}
 	}
 

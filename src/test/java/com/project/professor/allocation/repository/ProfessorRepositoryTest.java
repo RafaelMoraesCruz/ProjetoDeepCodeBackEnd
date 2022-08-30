@@ -12,7 +12,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
 import com.project.professor.allocation.entity.Professor;
-import com.project.professor.allocation.service.exception.ServiceNameNotExistException;
+import com.project.professor.allocation.service.exception.ServiceNotFindException;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -39,13 +39,13 @@ public class ProfessorRepositoryTest {
 	}
 	
 	@Test
-	public void findByCpf() throws ServiceNameNotExistException {
-		String cpf = "1112223";
+	public void findByCpf() throws ServiceNotFindException {
+		String cpf = "12345678901";
 		Professor prof = professorRepository.findByCpf(cpf).orElse(null);
 		if (prof != null) {
 			System.out.println(prof);
 		} else {
-			throw new ServiceNameNotExistException("Cpf não encontrado no banco de dados");
+			throw new ServiceNotFindException("Cpf não encontrado no banco de dados");
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class ProfessorRepositoryTest {
 	@Test
 	public void create() {
 		Professor prof = new Professor();
-		prof.setName("rodrigo");prof.setCpf("22233344455");prof.setDepartmentId(1L);
+		prof.setName("Ronaldo");prof.setCpf("12345678902");prof.setDepartmentId(1L);
 		professorRepository.save(prof);
 	}
 	

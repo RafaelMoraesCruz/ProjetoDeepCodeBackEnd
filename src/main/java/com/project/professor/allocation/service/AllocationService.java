@@ -11,7 +11,7 @@ import com.project.professor.allocation.entity.Professor;
 import com.project.professor.allocation.repository.AllocationRepository;
 import com.project.professor.allocation.service.exception.ServiceAllocationTimeException;
 import com.project.professor.allocation.service.exception.ServiceColissiontException;
-import com.project.professor.allocation.service.exception.ServiceNameNotExistException;
+import com.project.professor.allocation.service.exception.ServiceNotFindException;
 
 @Service
 public class AllocationService {
@@ -57,18 +57,18 @@ public class AllocationService {
 	}
 
 	public Allocation save(Allocation allocation)
-			throws ServiceAllocationTimeException, ServiceColissiontException, ServiceNameNotExistException {
+			throws ServiceAllocationTimeException, ServiceColissiontException, ServiceNotFindException {
 		allocation.setId(null);
 		return saveInternal(allocation);
 
 	}
 
 	public Allocation update(Allocation allocation)
-			throws ServiceNameNotExistException, ServiceAllocationTimeException, ServiceColissiontException {
+			throws ServiceNotFindException, ServiceAllocationTimeException, ServiceColissiontException {
 		if (allocation.getId() != null && allocationRepository.existsById(allocation.getId())) {
 			return saveInternal(allocation);
 		} else {
-			throw new ServiceNameNotExistException("Allocation doesn't exist");
+			throw new ServiceNotFindException("Allocation doesn't exist");
 		}
 	}
 
@@ -76,16 +76,16 @@ public class AllocationService {
 		allocationRepository.deleteAll();
 	}
 
-	public void deleteById(Long id) throws ServiceNameNotExistException {
+	public void deleteById(Long id) throws ServiceNotFindException {
 		if (id != null && allocationRepository.existsById(id)) {
 			allocationRepository.deleteById(id);
 		} else {
-			throw new ServiceNameNotExistException("Allocation doesn't exist");
+			throw new ServiceNotFindException("Allocation doesn't exist");
 		}
 	}
 
 	private Allocation saveInternal(Allocation allocation)
-			throws ServiceAllocationTimeException, ServiceColissiontException, ServiceNameNotExistException {
+			throws ServiceAllocationTimeException, ServiceColissiontException, ServiceNotFindException {
 
 		isEndHourGreaterThanStartHour(allocation);
 		hasCollission(allocation);

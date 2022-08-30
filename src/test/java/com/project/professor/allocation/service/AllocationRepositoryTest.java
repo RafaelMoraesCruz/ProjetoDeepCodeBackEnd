@@ -19,7 +19,7 @@ import org.springframework.test.context.TestPropertySource;
 import com.project.professor.allocation.entity.Allocation;
 import com.project.professor.allocation.service.exception.ServiceAllocationTimeException;
 import com.project.professor.allocation.service.exception.ServiceColissiontException;
-import com.project.professor.allocation.service.exception.ServiceNameNotExistException;
+import com.project.professor.allocation.service.exception.ServiceNotFindException;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -77,7 +77,7 @@ public class AllocationRepositoryTest {
 			e.getMessage();
 		} catch (ServiceColissiontException e) {
 			e.getMessage();
-		} catch (ServiceNameNotExistException e) {
+		} catch (ServiceNotFindException e) {
 			e.getMessage();
 		}
 
@@ -101,7 +101,7 @@ public class AllocationRepositoryTest {
 			e.getMessage();
 		} catch (ServiceColissiontException e) {
 			e.getMessage();
-		} catch (ServiceNameNotExistException e) {
+		} catch (ServiceNotFindException e) {
 			e.getMessage();
 		}
 
