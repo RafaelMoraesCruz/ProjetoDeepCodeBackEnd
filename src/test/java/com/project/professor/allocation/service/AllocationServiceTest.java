@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
@@ -21,11 +22,9 @@ import com.project.professor.allocation.service.exception.ServiceAllocationTimeE
 import com.project.professor.allocation.service.exception.ServiceColissiontException;
 import com.project.professor.allocation.service.exception.ServiceNotFindException;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-@Rollback(false)
+@SpringBootTest
 @TestPropertySource(locations = "classpath:application.properties")
-public class AllocationRepositoryTest {
+public class AllocationServiceTest {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("HH:mmZ");
 
@@ -37,12 +36,12 @@ public class AllocationRepositoryTest {
 		List<Allocation> allocationFind = allocationService.findAll();
 		allocationFind.stream().forEach(System.out::println);
 	}
-//
-//	@Test
-//	public void findyById() {
-//		Optional<Allocation> findId = allocationService.findById(1l);
-//		System.out.println(findId.orElse(null));
-//	}
+
+	@Test
+	public void findyById() {
+		Allocation findId = allocationService.findById(1l);
+		System.out.println(findId);
+	}
 
 	@Test
 	public void findByProfessorID() {

@@ -13,14 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
 import com.project.professor.allocation.entity.Allocation;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-@Rollback(false)
+@SpringBootTest
 @TestPropertySource(locations = "classpath:application.properties")
 public class AllocationRepositoryTest {
 
@@ -51,7 +50,7 @@ public class AllocationRepositoryTest {
 
 	@Test
 	public void findByCursoID() {
-		Long cursoID = 2L;
+		Long cursoID = 1L;
 
 		List<Allocation> allocations = allocationRepository.findByCourseId(cursoID);
 		allocations.stream().forEach(System.out::println);
