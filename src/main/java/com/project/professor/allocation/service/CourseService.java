@@ -10,6 +10,8 @@ import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.repository.CourseRepository;
 import com.project.professor.allocation.service.exception.ServiceNameNotExistException;
 
+import net.bytebuddy.implementation.bytecode.Throw;
+
 @Service
 public class CourseService {
 
@@ -18,6 +20,15 @@ public class CourseService {
 	public CourseService(CourseRepository courseRepository) {
 		super();
 		this.courseRepository = courseRepository;
+	}
+
+	public Course findByCourseId(Long courseId) throws ServiceNameNotExistException {
+		Course course = courseRepository.findById(courseId).orElse(null);
+		if (course != null) {
+			return course;
+		}else {
+			throw new ServiceNameNotExistException("Course not find");
+		}
 	}
 
 	public List<Course> findByNameContaining(String name) {
@@ -31,7 +42,7 @@ public class CourseService {
 	}
 
 	public Course findById(Long id) {
-		return courseRepository.findById(2L).orElse(null);
+		return courseRepository.findById(id).orElse(null);
 
 	}
 
