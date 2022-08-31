@@ -32,6 +32,15 @@ public class AllocationServiceTest {
 	AllocationService allocationService;
 
 	@Test
+	public void deleteById() {
+		try {
+			allocationService.deleteById(1L);
+		} catch (ServiceNotFindException e) {
+			System.out.println(e.getServiceNameNotExistExpetion());
+		}
+	}
+
+	@Test
 	public void findAll() {
 		List<Allocation> allocationFind = allocationService.findAll();
 		allocationFind.stream().forEach(System.out::println);
@@ -39,16 +48,26 @@ public class AllocationServiceTest {
 
 	@Test
 	public void findyById() {
-		Allocation findId = allocationService.findById(1l);
-		System.out.println(findId);
+		Allocation findId;
+		try {
+			findId = allocationService.findById(1l);
+			System.out.println(findId);
+		} catch (ServiceNotFindException e) {
+			System.out.println(e.getServiceNameNotExistExpetion());
+		}
 	}
 
 	@Test
 	public void findByProfessorID() {
 		Long professorId = 1L;
 
-		List<Allocation> allocations = allocationService.findByProfessorId(professorId);
-		allocations.stream().forEach(System.out::println);
+		List<Allocation> allocations;
+		try {
+			allocations = allocationService.findByProfessorId(professorId);
+			allocations.stream().forEach(System.out::println);
+		} catch (ServiceAllocationTimeException e) {
+			System.out.println(e.getServiceNameNotExistExpetion());
+		}
 	}
 
 	@Test
@@ -60,7 +79,7 @@ public class AllocationServiceTest {
 			allocations = allocationService.findByCourseId(cursoID);
 			allocations.stream().forEach(System.out::println);
 		} catch (ServiceNotFindException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getServiceNameNotExistExpetion());
 		}
 
 	}
@@ -82,11 +101,11 @@ public class AllocationServiceTest {
 			System.out.println(allocation);
 
 		} catch (ServiceAllocationTimeException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getServiceNameNotExistExpetion());
 		} catch (ServiceColissiontException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getServiceNameNotExistExpetion());
 		} catch (ServiceNotFindException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getServiceNameNotExistExpetion());
 		}
 
 	}

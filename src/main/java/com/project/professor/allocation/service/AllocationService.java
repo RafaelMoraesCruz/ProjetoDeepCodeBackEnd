@@ -40,8 +40,13 @@ public class AllocationService {
 		return courseService;
 	}
 
-	public List<Allocation> findByProfessorId(Long professorId) {
-		return allocationRepository.findByProfessorId(professorId);
+	public List<Allocation> findByProfessorId(Long professorId) throws ServiceAllocationTimeException {
+		List<Allocation> allocated = allocationRepository.findByProfessorId(professorId);
+		if (!allocated.isEmpty()) {
+			return allocated;
+		} else {
+			throw new ServiceAllocationTimeException("Professor not find! ");
+		}
 	}
 
 	public List<Allocation> findByCourseId(Long courseId) throws ServiceNotFindException {
@@ -54,8 +59,13 @@ public class AllocationService {
 
 	}
 
-	public Allocation findById(Long Id) {
-		return allocationRepository.findById(Id).orElse(null);
+	public Allocation findById(Long Id) throws ServiceNotFindException {
+		Allocation allocation = allocationRepository.findById(Id).orElse(null);
+		if (allocation != null) {
+			return allocation;
+		} else {
+			throw new ServiceNotFindException("Allocation doesn't exists");
+		}
 	}
 
 	public List<Allocation> findAll() {
@@ -132,15 +142,8 @@ public class AllocationService {
 	}
 
 	private boolean hasColission(Allocation currentAllocation, Allocation newAllocation) {
-
-		System.out.println("currentAllocation.getStart().compareTo(newAllocation.getEnd()): "
-				+ currentAllocation.getStart().compareTo(newAllocation.getEnd()));
-		System.out.println("newAllocation.getStart().compareTo(currentAllocation.getEnd()): "
-				+ newAllocation.getStart().compareTo(currentAllocation.getEnd()));
-
 		return !currentAllocation.getId().equals(newAllocation.getId())
 				&& currentAllocation.getDay() == newAllocation.getDay()
-				&& currentAllocation.getStart().compareTo(newAllocation.getEnd()) < 0
 				&& currentAllocation.getStart().compareTo(newAllocation.getEnd()) < 0
 				&& newAllocation.getStart().compareTo(currentAllocation.getEnd()) < 0;
 	}
