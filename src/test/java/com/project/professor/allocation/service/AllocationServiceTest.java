@@ -53,58 +53,66 @@ public class AllocationServiceTest {
 
 	@Test
 	public void findByCursoID() {
-		Long cursoID = 2L;
+		Long cursoID = 3L;
 
-		List<Allocation> allocations = allocationService.findByCourseId(cursoID);
-		allocations.stream().forEach(System.out::println);
+		List<Allocation> allocations;
+		try {
+			allocations = allocationService.findByCourseId(cursoID);
+			allocations.stream().forEach(System.out::println);
+		} catch (ServiceNotFindException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 
 	@Test
 	public void create() throws ParseException {
 
-		Allocation allocation = new Allocation();
-		allocation.setId(null);
-		allocation.setDay(DayOfWeek.SUNDAY);
-		allocation.setStart(sdf.parse("08:00-0300"));
-		allocation.setEnd(sdf.parse("18:00-0300"));
-		allocation.setProfessorId(3L);
-		allocation.setCourseId(1L);
-
 		try {
+
+			Allocation allocation = new Allocation();
+			allocation.setId(null);
+			allocation.setDay(DayOfWeek.SUNDAY);
+			allocation.setStart(sdf.parse("15:00-0300"));
+			allocation.setEnd(sdf.parse("17:00-0300"));
+			allocation.setProfessorId(3L);
+			allocation.setCourseId(1L);
 			allocation = allocationService.save(allocation);
+
+			System.out.println(allocation);
+
 		} catch (ServiceAllocationTimeException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		} catch (ServiceColissiontException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		} catch (ServiceNotFindException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 
-		System.out.println(allocation);
 	}
 
 	@Test
 	public void upadate() throws ParseException {
 
-		Allocation allocation = new Allocation();
-		allocation.setId(1L);
-		allocation.setDay(DayOfWeek.SUNDAY);
-		allocation.setStart(sdf.parse("08:00-0300"));
-		allocation.setEnd(sdf.parse("18:00-0300"));
-		allocation.setProfessorId(1L);
-		allocation.setCourseId(1L);
-
 		try {
+			Allocation allocation = new Allocation();
+			allocation.setId(1L);
+			allocation.setDay(DayOfWeek.SUNDAY);
+			allocation.setStart(sdf.parse("08:00-0300"));
+			allocation.setEnd(sdf.parse("18:00-0300"));
+			allocation.setProfessorId(1L);
+			allocation.setCourseId(1L);
 			allocation = allocationService.save(allocation);
+
+			System.out.println(allocation);
 		} catch (ServiceAllocationTimeException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		} catch (ServiceColissiontException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		} catch (ServiceNotFindException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 
-		System.out.println(allocation);
 	}
 
 }

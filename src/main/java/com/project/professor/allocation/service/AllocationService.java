@@ -44,8 +44,14 @@ public class AllocationService {
 		return allocationRepository.findByProfessorId(professorId);
 	}
 
-	public List<Allocation> findByCourseId(Long courseId) {
-		return allocationRepository.findByCourseId(courseId);
+	public List<Allocation> findByCourseId(Long courseId) throws ServiceNotFindException {
+		List<Allocation> coursesAllocated = allocationRepository.findByCourseId(courseId);
+		if (coursesAllocated != null) {
+			return coursesAllocated;
+		} else {
+			throw new ServiceNotFindException("Course not find");
+		}
+
 	}
 
 	public Allocation findById(Long Id) {
@@ -105,8 +111,8 @@ public class AllocationService {
 		boolean isEndHourGreaterThanStartHour = true;
 
 		if (allocation.getStart() != null && allocation.getEnd() != null
-				&& allocation.getEnd().compareTo(allocation.getStart()) > 0) {
-			throw new ServiceAllocationTimeException("Hour end must be less start hour");
+				&& allocation.getEnd().compareTo(allocation.getStart()) < 0) {
+			throw new ServiceAllocationTimeException("End hour must be less start hour");
 		}
 		return isEndHourGreaterThanStartHour;
 	}
@@ -119,13 +125,19 @@ public class AllocationService {
 		for (Allocation currentAllocation : currentAllocations) {
 			hasCollision = hasColission(currentAllocation, newAllocation);
 			if (hasCollision) {
-				throw new ServiceColissiontException("For this allocation time Profesor already allocated");
+				throw new ServiceColissiontException("Profesor already allocated at this time");
 			}
 		}
 		return hasCollision;
 	}
 
 	private boolean hasColission(Allocation currentAllocation, Allocation newAllocation) {
+
+		System.out.println("currentAllocation.getStart().compareTo(newAllocation.getEnd()): "
+				+ currentAllocation.getStart().compareTo(newAllocation.getEnd()));
+		System.out.println("newAllocation.getStart().compareTo(currentAllocation.getEnd()): "
+				+ newAllocation.getStart().compareTo(currentAllocation.getEnd()));
+
 		return !currentAllocation.getId().equals(newAllocation.getId())
 				&& currentAllocation.getDay() == newAllocation.getDay()
 				&& currentAllocation.getStart().compareTo(newAllocation.getEnd()) < 0
