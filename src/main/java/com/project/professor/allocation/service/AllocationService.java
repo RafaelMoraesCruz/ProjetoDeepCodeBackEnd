@@ -28,18 +28,6 @@ public class AllocationService {
 		this.courseService = courseService;
 	}
 
-	public AllocationRepository getAllocationRepository() {
-		return allocationRepository;
-	}
-
-	public ProfessorService getProfessorService() {
-		return professorService;
-	}
-
-	public CourseService getCourseService() {
-		return courseService;
-	}
-
 	public List<Allocation> findByProfessorId(Long professorId) throws ServiceAllocationTimeException {
 		List<Allocation> allocated = allocationRepository.findByProfessorId(professorId);
 		if (!allocated.isEmpty()) {

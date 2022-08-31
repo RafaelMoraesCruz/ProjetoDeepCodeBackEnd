@@ -50,7 +50,7 @@ public class AllocationServiceTest {
 	public void findyById() {
 		Allocation findId;
 		try {
-			findId = allocationService.findById(1l);
+			findId = allocationService.findById(7l);
 			System.out.println(findId);
 		} catch (ServiceNotFindException e) {
 			System.out.println(e.getServiceNameNotExistExpetion());
@@ -91,7 +91,7 @@ public class AllocationServiceTest {
 
 			Allocation allocation = new Allocation();
 			allocation.setId(null);
-			allocation.setDay(DayOfWeek.SUNDAY);
+			allocation.setDay(DayOfWeek.FRIDAY);
 			allocation.setStart(sdf.parse("15:00-0300"));
 			allocation.setEnd(sdf.parse("17:00-0300"));
 			allocation.setProfessorId(3L);
@@ -116,10 +116,10 @@ public class AllocationServiceTest {
 		try {
 			Allocation allocation = new Allocation();
 			allocation.setId(1L);
-			allocation.setDay(DayOfWeek.SUNDAY);
-			allocation.setStart(sdf.parse("08:00-0300"));
+			allocation.setDay(DayOfWeek.THURSDAY);
+			allocation.setStart(sdf.parse("15:00-0300"));
 			allocation.setEnd(sdf.parse("18:00-0300"));
-			allocation.setProfessorId(1L);
+			allocation.setProfessorId(3L);
 			allocation.setCourseId(1L);
 			allocation = allocationService.save(allocation);
 
@@ -131,7 +131,5 @@ public class AllocationServiceTest {
 		} catch (ServiceNotFindException e) {
 			System.out.println(e.getMessage());
 		}
-
 	}
-
 }
