@@ -90,14 +90,15 @@ public class ProfessorController {
 
 		}
 	}
-	
-	@PutMapping(path = "{/professor_id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@PutMapping(path = "{/professor_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Professor> update(@PathVariable(name = "professor_id")Long id, @RequestBody Professor professor){
+	public ResponseEntity<Professor> update(@PathVariable(name = "professor_id") Long id,
+			@RequestBody Professor professor) {
 		professor.setId(id);
 		try {
 			professor = professorService.update(professor);
-			if(professor == null) {
+			if (professor == null) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			} else {
 				return new ResponseEntity<>(professor, HttpStatus.OK);
@@ -106,11 +107,11 @@ public class ProfessorController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
+
 	@DeleteMapping(path = "/{professor_id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Void> deleteById(@PathVariable(name = "professor_id")Long id) throws ServiceNotFindException{
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "professor_id") Long id)
+			throws ServiceNotFindException {
 		try {
 			professorService.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -118,10 +119,10 @@ public class ProfessorController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Void> deleteAll(){
+	public ResponseEntity<Void> deleteAll() {
 		professorService.deleteAll();
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

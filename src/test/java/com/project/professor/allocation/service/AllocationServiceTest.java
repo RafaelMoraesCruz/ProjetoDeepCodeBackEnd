@@ -49,12 +49,10 @@ public class AllocationServiceTest {
 	@Test
 	public void findyById() {
 		Allocation findId;
-		try {
-			findId = allocationService.findById(7l);
-			System.out.println(findId);
-		} catch (ServiceNotFindException e) {
-			System.out.println(e.getServiceNameNotExistExpetion());
-		}
+
+		findId = allocationService.findById(7l);
+		System.out.println(findId);
+
 	}
 
 	@Test
@@ -62,12 +60,10 @@ public class AllocationServiceTest {
 		Long professorId = 1L;
 
 		List<Allocation> allocations;
-		try {
-			allocations = allocationService.findByProfessorId(professorId);
-			allocations.stream().forEach(System.out::println);
-		} catch (ServiceAllocationTimeException e) {
-			System.out.println(e.getServiceNameNotExistExpetion());
-		}
+
+		allocations = allocationService.findByProfessorId(professorId);
+		allocations.stream().forEach(System.out::println);
+
 	}
 
 	@Test
@@ -75,12 +71,9 @@ public class AllocationServiceTest {
 		Long cursoID = 3L;
 
 		List<Allocation> allocations;
-		try {
-			allocations = allocationService.findByCourseId(cursoID);
-			allocations.stream().forEach(System.out::println);
-		} catch (ServiceNotFindException e) {
-			System.out.println(e.getServiceNameNotExistExpetion());
-		}
+
+		allocations = allocationService.findByCourseId(cursoID);
+		allocations.stream().forEach(System.out::println);
 
 	}
 

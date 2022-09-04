@@ -28,32 +28,18 @@ public class AllocationService {
 		this.courseService = courseService;
 	}
 
-	public List<Allocation> findByProfessorId(Long professorId) throws ServiceAllocationTimeException {
-		List<Allocation> allocated = allocationRepository.findByProfessorId(professorId);
-		if (!allocated.isEmpty()) {
-			return allocated;
-		} else {
-			throw new ServiceAllocationTimeException("Professor not find! ");
-		}
-	}
-
-	public List<Allocation> findByCourseId(Long courseId) throws ServiceNotFindException {
-		List<Allocation> coursesAllocated = allocationRepository.findByCourseId(courseId);
-		if (coursesAllocated != null) {
-			return coursesAllocated;
-		} else {
-			throw new ServiceNotFindException("Course not find");
-		}
+	public List<Allocation> findByProfessorId(Long professorId) {
+		return allocationRepository.findByProfessorId(professorId);
 
 	}
 
-	public Allocation findById(Long Id) throws ServiceNotFindException {
-		Allocation allocation = allocationRepository.findById(Id).orElse(null);
-		if (allocation != null) {
-			return allocation;
-		} else {
-			throw new ServiceNotFindException("Allocation doesn't exists");
-		}
+	public List<Allocation> findByCourseId(Long courseId) {
+		return allocationRepository.findByCourseId(courseId);
+	}
+
+	public Allocation findById(Long Id) {
+		return allocationRepository.findById(Id).orElse(null);
+
 	}
 
 	public List<Allocation> findAll() {
