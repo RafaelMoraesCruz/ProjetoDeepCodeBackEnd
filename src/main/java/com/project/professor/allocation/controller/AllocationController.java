@@ -55,13 +55,13 @@ public class AllocationController {
 		}
 
 	}
-	
+
 	@GetMapping(path = "/course/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Allocation>> findByCourse(@PathVariable(name = "course_id") Long professorId) {
+	public ResponseEntity<List<Allocation>> findByCourse(@PathVariable(name = "course_id") Long courseId) {
 		try {
-			List<Allocation> allocatioProfessor = allocationService.findByProfessorId(professorId);
-			return new ResponseEntity<>(allocatioProfessor, HttpStatus.OK);
-		} catch (ServiceAllocationTimeException e) {
+			List<Allocation> allocatioCourse = allocationService.findByCourseId(courseId);
+			return new ResponseEntity<>(allocatioCourse, HttpStatus.OK);
+		} catch (ServiceNotFindException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
