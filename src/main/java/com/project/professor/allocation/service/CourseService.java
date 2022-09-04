@@ -70,7 +70,6 @@ public class CourseService {
 
 	public void deleteAll() {
 		courseRepository.deleteAllInBatch();
-		;
 	}
 
 }
