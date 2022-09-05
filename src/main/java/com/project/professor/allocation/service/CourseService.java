@@ -26,7 +26,7 @@ public class CourseService {
 		Course course = courseRepository.findById(courseId).orElse(null);
 		if (course != null) {
 			return course;
-		}else {
+		} else {
 			throw new ServiceNotFindException("Course not find");
 		}
 	}
@@ -36,7 +36,8 @@ public class CourseService {
 
 	}
 
-	public List<Course> findAll() {
+	public List<Course> findAll(String name) {
+
 		return courseRepository.findAll();
 
 	}
