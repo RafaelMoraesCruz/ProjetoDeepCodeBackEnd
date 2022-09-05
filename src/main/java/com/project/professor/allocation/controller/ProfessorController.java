@@ -45,7 +45,7 @@ public class ProfessorController {
 
 	}
 
-	@GetMapping("/{professor_id}")
+	@GetMapping(path = "/{professor_id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Professor> findById(@PathVariable(name = "professor_id") Long id)
 			throws ServiceNotFindException {
@@ -57,7 +57,7 @@ public class ProfessorController {
 		}
 	}
 
-	@GetMapping("deptid/{department_id}")
+	@GetMapping(path = "deptid/{department_id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Professor>> findByDepartmentId(@PathVariable(name = "department_id") Long departmentId)
 			throws ServiceNotFindException {
 		List<Professor> professor = professorService.findByDepartmentId(departmentId);
@@ -68,7 +68,7 @@ public class ProfessorController {
 		}
 	}
 
-	@GetMapping(value = "/cpf")
+	@GetMapping(value = "/cpf", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Professor> findByCpf(@RequestParam String cpf) throws ServiceNotFindException {
 		Professor professor = professorService.findByCpf(cpf);
