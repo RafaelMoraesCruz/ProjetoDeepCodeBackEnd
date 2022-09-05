@@ -80,7 +80,7 @@ public class ProfessorController {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Professor> save(@RequestBody Professor professor) {
 		try {
 			professor = professorService.save(professor);
@@ -109,7 +109,7 @@ public class ProfessorController {
 	}
 
 	@DeleteMapping(path = "/{professor_id}")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteById(@PathVariable(name = "professor_id") Long id)
 			throws ServiceNotFindException {
 		try {
@@ -121,7 +121,7 @@ public class ProfessorController {
 	}
 
 	@DeleteMapping
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteAll() {
 		professorService.deleteAll();
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

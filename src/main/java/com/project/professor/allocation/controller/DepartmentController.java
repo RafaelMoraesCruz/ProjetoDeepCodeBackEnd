@@ -38,7 +38,7 @@ public class DepartmentController {
 		return new ResponseEntity<>(departments, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/{department_id}" ,produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{department_id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Department> findById(@PathVariable(name = "department_id") Long id) {
 		Department department = departmentService.findById(id);
 		if (department == null) {

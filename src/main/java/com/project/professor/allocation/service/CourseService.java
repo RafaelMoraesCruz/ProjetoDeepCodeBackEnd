@@ -22,15 +22,6 @@ public class CourseService {
 		this.courseRepository = courseRepository;
 	}
 
-	public Course findByCourseId(Long courseId) throws ServiceNotFindException {
-		Course course = courseRepository.findById(courseId).orElse(null);
-		if (course != null) {
-			return course;
-		} else {
-			throw new ServiceNotFindException("Course not find");
-		}
-	}
-
 	public List<Course> findByNameContaining(String name) {
 		return courseRepository.findByNameContaining(name);
 
