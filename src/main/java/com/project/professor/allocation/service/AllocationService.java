@@ -85,7 +85,7 @@ public class AllocationService {
 		Professor professor = professorService.findById(allocation.getProfessorId());
 		allocation.setProfessor(professor);
 
-		Course course = courseService.findByCourseId(allocation.getCourseId());
+		Course course = courseService.findById(allocation.getCourseId());
 		allocation.setCourse(course);
 
 		return allocation;
