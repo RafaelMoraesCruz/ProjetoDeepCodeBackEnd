@@ -1,14 +1,13 @@
 package com.project.professor.allocation.service;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.entity.Professor;
 import com.project.professor.allocation.repository.ProfessorRepository;
 import com.project.professor.allocation.service.exception.ServiceNotFindException;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class ProfessorService {
@@ -35,21 +34,11 @@ public class ProfessorService {
 	}
 
 	public Professor findById(Long id) throws ServiceNotFindException {
-		Professor prof = professorRepository.findById(id).orElse(null);
-		if (prof != null) {
-			return prof;
-		} else {
-			throw new ServiceNotFindException("Professor doesn't exist");
-		}
+		return professorRepository.findById(id).orElse(null);
 	}
 
 	public Professor findByCpf(String cpf) throws ServiceNotFindException {
-		Professor prof = professorRepository.findByCpf(cpf).orElse(null);
-		if (prof != null) {
-			return prof;
-		} else {
-			throw new ServiceNotFindException("cpf Does not exists in table professor");
-		}
+		return professorRepository.findByCpf(cpf).orElse(null);
 	}
 
 	public List<Professor> findByDepartmentId(Long departmentId) throws ServiceNotFindException {
@@ -76,8 +65,6 @@ public class ProfessorService {
 	public void deleteById(Long id) throws ServiceNotFindException {
 		if (id != null && professorRepository.existsById(id)) {
 			professorRepository.deleteById(id);
-		} else {
-			throw new ServiceNotFindException("Professor doesn't exist");
 		}
 	}
 
