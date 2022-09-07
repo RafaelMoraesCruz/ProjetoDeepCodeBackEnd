@@ -24,13 +24,8 @@ public class ProfessorService {
 		return professorRepository.findAll();
 	}
 
-	public List<Professor> findByNameContaining(String name) throws ServiceNotFindException {
-		List<Professor> listProf = professorRepository.findByNameContaining(name);
-		if (listProf.size() != 0) {
-			return professorRepository.findByNameContaining(name);
-		} else {
-			throw new ServiceNotFindException("Professor doesn't exist");
-		}
+	public List<Professor> findByNameContaining(String name) {
+		return professorRepository.findByNameContaining(name);
 	}
 
 	public Professor findById(Long id) throws ServiceNotFindException {
@@ -41,13 +36,9 @@ public class ProfessorService {
 		return professorRepository.findByCpf(cpf).orElse(null);
 	}
 
-	public List<Professor> findByDepartmentId(Long departmentId) throws ServiceNotFindException {
-		List<Professor> listProf = professorRepository.findByDepartmentId(departmentId);
-		if (listProf.size() != 0) {
-			return professorRepository.findByDepartmentId(departmentId);
-		} else {
-			throw new ServiceNotFindException("Department doesn't have professors in it");
-		}
+	public List<Professor> findByDepartmentId(Long departmentId) {
+		return professorRepository.findByDepartmentId(departmentId);
+
 	}
 
 	public Professor save(Professor professor) {
