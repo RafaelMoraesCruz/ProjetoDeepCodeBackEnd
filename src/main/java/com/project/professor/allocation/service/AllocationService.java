@@ -77,18 +77,24 @@ public class AllocationService {
 	private Allocation saveInternal(Allocation allocation)
 			throws ServiceAllocationTimeException, ServiceColissiontException, ServiceNotFindException {
 
-		isEndHourGreaterThanStartHour(allocation);
-		hasCollission(allocation);
+		if (isEndHourGreaterThanStartHour(allocation)) {
+			if (!hasCollission(allocation)) {
+				allocation = allocationRepository.save(allocation);
 
-		allocation = allocationRepository.save(allocation);
+				Professor professor = professorService.findById(allocation.getProfessorId());
+				allocation.setProfessor(professor);
 
-		Professor professor = professorService.findById(allocation.getProfessorId());
-		allocation.setProfessor(professor);
+				Course course = courseService.findById(allocation.getCourseId());
+				allocation.setCourse(course);
 
-		Course course = courseService.findById(allocation.getCourseId());
-		allocation.setCourse(course);
+				return allocation;
+			} else {
+				throw new ServiceColissiontException("For this allocation time Profesor already allocation");
+			}
+		} else {
+			throw new ServiceAllocationTimeException("Hour end must be less start hour");
+		}
 
-		return allocation;
 	}
 
 	boolean isEndHourGreaterThanStartHour(Allocation allocation) throws ServiceAllocationTimeException {
@@ -96,7 +102,7 @@ public class AllocationService {
 
 		if (allocation.getStart() != null && allocation.getEnd() != null
 				&& allocation.getEnd().compareTo(allocation.getStart()) < 0) {
-			throw new ServiceAllocationTimeException("End hour must be less start hour");
+			isEndHourGreaterThanStartHour = false;
 		}
 		return isEndHourGreaterThanStartHour;
 	}
@@ -109,7 +115,7 @@ public class AllocationService {
 		for (Allocation currentAllocation : currentAllocations) {
 			hasCollision = hasColission(currentAllocation, newAllocation);
 			if (hasCollision) {
-				throw new ServiceColissiontException("Profesor already allocated at this time");
+				break;
 			}
 		}
 		return hasCollision;
