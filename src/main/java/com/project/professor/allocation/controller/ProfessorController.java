@@ -119,7 +119,6 @@ public class ProfessorController {
 			return new ResponseEntity<Professor>(professor, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
 		}
 	}
 
@@ -141,7 +140,7 @@ public class ProfessorController {
 			} else {
 				return new ResponseEntity<>(professor, HttpStatus.OK);
 			}
-		} catch (Exception e) {
+		} catch (ServiceNotFindException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -158,7 +157,7 @@ public class ProfessorController {
 		try {
 			professorService.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		} catch (Exception e) {
+		} catch (ServiceNotFindException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
