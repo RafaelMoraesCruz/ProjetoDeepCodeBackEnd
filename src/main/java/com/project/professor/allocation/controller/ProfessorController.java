@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.project.professor.allocation.entity.Professor;
 import com.project.professor.allocation.service.ProfessorService;
-import com.project.professor.allocation.service.exception.ServiceNotFindException;
+import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,7 +42,7 @@ public class ProfessorController {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Professor>> findAll(@RequestParam(name = "name", required = false) String name)
-			throws ServiceNotFindException {
+			throws EntityNotFoundException {
 		List<Professor> professors;
 		if (name == null) {
 			professors = professorService.findAll();
@@ -62,7 +62,7 @@ public class ProfessorController {
 	@GetMapping(path = "/{professor_id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Professor> findById(@PathVariable(name = "professor_id") Long id)
-			throws ServiceNotFindException {
+			throws EntityNotFoundException {
 		Professor professor = professorService.findById(id);
 		if (professor == null) {
 			return new ResponseEntity<>(professor, HttpStatus.NOT_FOUND);
@@ -80,7 +80,7 @@ public class ProfessorController {
 	@GetMapping(path = "deptid/{department_id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Professor>> findByDepartmentId(@PathVariable(name = "department_id") Long departmentId)
-			throws ServiceNotFindException {
+			throws EntityNotFoundException {
 		List<Professor> professor = professorService.findByDepartmentId(departmentId);
 		if (professor.size() == 0) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -97,7 +97,7 @@ public class ProfessorController {
     })
 	@GetMapping(value = "/cpf", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Professor> findByCpf(@RequestParam String cpf) throws ServiceNotFindException {
+	public ResponseEntity<Professor> findByCpf(@RequestParam String cpf) throws EntityNotFoundException {
 		Professor professor = professorService.findByCpf(cpf);
 		if (professor != null) {
 			return new ResponseEntity<>(professor, HttpStatus.OK);
@@ -140,7 +140,7 @@ public class ProfessorController {
 			} else {
 				return new ResponseEntity<>(professor, HttpStatus.OK);
 			}
-		} catch (ServiceNotFindException e) {
+		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -153,11 +153,11 @@ public class ProfessorController {
 	@DeleteMapping(path = "/{professor_id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteById(@PathVariable(name = "professor_id") Long id)
-			throws ServiceNotFindException {
+			throws EntityNotFoundException {
 		try {
 			professorService.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		} catch (ServiceNotFindException e) {
+		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}

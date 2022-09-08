@@ -9,9 +9,9 @@ import com.project.professor.allocation.entity.Allocation;
 import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.entity.Professor;
 import com.project.professor.allocation.repository.AllocationRepository;
-import com.project.professor.allocation.service.exception.ServiceAllocationTimeException;
-import com.project.professor.allocation.service.exception.ServiceColissiontException;
-import com.project.professor.allocation.service.exception.ServiceNotFindException;
+import com.project.professor.allocation.service.exception.AllocationTimeException;
+import com.project.professor.allocation.service.exception.ColissiontException;
+import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 @Service
 public class AllocationService {
@@ -47,18 +47,18 @@ public class AllocationService {
 	}
 
 	public Allocation save(Allocation allocation)
-			throws ServiceAllocationTimeException, ServiceColissiontException, ServiceNotFindException {
+			throws AllocationTimeException, ColissiontException, EntityNotFoundException {
 		allocation.setId(null);
 		return saveInternal(allocation);
 
 	}
 
 	public Allocation update(Allocation allocation)
-			throws ServiceNotFindException, ServiceAllocationTimeException, ServiceColissiontException {
+			throws EntityNotFoundException, AllocationTimeException, ColissiontException {
 		if (allocation.getId() != null && allocationRepository.existsById(allocation.getId())) {
 			return saveInternal(allocation);
 		} else {
-			throw new ServiceNotFindException("Allocation doesn't exist");
+			throw new EntityNotFoundException("Allocation doesn't exist");
 		}
 	}
 
@@ -66,16 +66,16 @@ public class AllocationService {
 		allocationRepository.deleteAll();
 	}
 
-	public void deleteById(Long id) throws ServiceNotFindException {
+	public void deleteById(Long id) throws EntityNotFoundException {
 		if (id != null && allocationRepository.existsById(id)) {
 			allocationRepository.deleteById(id);
 		} else {
-			throw new ServiceNotFindException("Allocation doesn't exist");
+			throw new EntityNotFoundException("Allocation doesn't exist");
 		}
 	}
 
 	private Allocation saveInternal(Allocation allocation)
-			throws ServiceAllocationTimeException, ServiceColissiontException, ServiceNotFindException {
+			throws AllocationTimeException, ColissiontException, EntityNotFoundException {
 
 		if (isEndHourGreaterThanStartHour(allocation)) {
 			if (!hasCollission(allocation)) {
@@ -89,25 +89,20 @@ public class AllocationService {
 
 				return allocation;
 			} else {
-				throw new ServiceColissiontException("For this allocation time Profesor already allocation");
+				throw new ColissiontException("For this allocation time Profesor already allocation");
 			}
 		} else {
-			throw new ServiceAllocationTimeException("Hour end must be less start hour");
+			throw new AllocationTimeException("Hour end must be less start hour");
 		}
 
 	}
 
-	boolean isEndHourGreaterThanStartHour(Allocation allocation) throws ServiceAllocationTimeException {
-		boolean isEndHourGreaterThanStartHour = true;
-
-		if (allocation.getStart() != null && allocation.getEnd() != null
-				&& allocation.getEnd().compareTo(allocation.getStart()) < 0) {
-			isEndHourGreaterThanStartHour = false;
-		}
-		return isEndHourGreaterThanStartHour;
+	boolean isEndHourGreaterThanStartHour(Allocation allocation) throws AllocationTimeException {
+		return allocation.getStart() != null && allocation.getEnd() != null
+				&& allocation.getEnd().compareTo(allocation.getStart()) > 0;
 	}
 
-	boolean hasCollission(Allocation newAllocation) throws ServiceColissiontException {
+	boolean hasCollission(Allocation newAllocation) throws ColissiontException {
 		boolean hasCollision = false;
 
 		List<Allocation> currentAllocations = allocationRepository.findByProfessorId(newAllocation.getProfessorId());

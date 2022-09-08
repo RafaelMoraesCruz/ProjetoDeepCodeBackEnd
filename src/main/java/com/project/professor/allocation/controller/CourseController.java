@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.service.CourseService;
-import com.project.professor.allocation.service.exception.ServiceNotFindException;
+import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 @RestController()
 @RequestMapping(path = "/Courses")
@@ -72,7 +72,7 @@ public class CourseController {
 	@PutMapping(path = "/{course_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Course> update(@PathVariable(name = "course_id") Long id, @RequestBody Course course)
-			throws ServiceNotFindException {
+			throws EntityNotFoundException {
 		try {
 			if (courseService.findById(id) != null) {
 				course.setId(id);
@@ -95,7 +95,7 @@ public class CourseController {
 
 	@DeleteMapping(path = "/{course_id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<Void> deleteById(@PathVariable(name = "course_id") Long id) throws ServiceNotFindException {
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "course_id") Long id) throws EntityNotFoundException {
 		try {
 			courseService.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);

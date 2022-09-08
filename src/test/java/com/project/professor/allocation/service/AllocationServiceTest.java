@@ -18,9 +18,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 
 import com.project.professor.allocation.entity.Allocation;
-import com.project.professor.allocation.service.exception.ServiceAllocationTimeException;
-import com.project.professor.allocation.service.exception.ServiceColissiontException;
-import com.project.professor.allocation.service.exception.ServiceNotFindException;
+import com.project.professor.allocation.service.exception.AllocationTimeException;
+import com.project.professor.allocation.service.exception.ColissiontException;
+import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application.properties")
@@ -35,8 +35,8 @@ public class AllocationServiceTest {
 	public void deleteById() {
 		try {
 			allocationService.deleteById(1L);
-		} catch (ServiceNotFindException e) {
-			System.out.println(e.getServiceNameNotExistExpetion());
+		} catch (EntityNotFoundException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -93,12 +93,12 @@ public class AllocationServiceTest {
 
 			System.out.println(allocation);
 
-		} catch (ServiceAllocationTimeException e) {
-			System.out.println(e.getServiceNameNotExistExpetion());
-		} catch (ServiceColissiontException e) {
-			System.out.println(e.getServiceNameNotExistExpetion());
-		} catch (ServiceNotFindException e) {
-			System.out.println(e.getServiceNameNotExistExpetion());
+		} catch (AllocationTimeException e) {
+			System.out.println(e.getMessage());
+		} catch (ColissiontException e) {
+			System.out.println(e.getMessage());
+		} catch (EntityNotFoundException e) {
+			System.out.println(e.getMessage());
 		}
 
 	}
@@ -117,11 +117,11 @@ public class AllocationServiceTest {
 			allocation = allocationService.save(allocation);
 
 			System.out.println(allocation);
-		} catch (ServiceAllocationTimeException e) {
+		} catch (AllocationTimeException e) {
 			System.out.println(e.getMessage());
-		} catch (ServiceColissiontException e) {
+		} catch (ColissiontException e) {
 			System.out.println(e.getMessage());
-		} catch (ServiceNotFindException e) {
+		} catch (EntityNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
 	}

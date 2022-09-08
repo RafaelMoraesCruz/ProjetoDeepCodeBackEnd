@@ -5,7 +5,7 @@ import java.util.List;
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.entity.Professor;
 import com.project.professor.allocation.repository.ProfessorRepository;
-import com.project.professor.allocation.service.exception.ServiceNotFindException;
+import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 
@@ -28,11 +28,11 @@ public class ProfessorService {
 		return professorRepository.findByNameContaining(name);
 	}
 
-	public Professor findById(Long id) throws ServiceNotFindException {
+	public Professor findById(Long id) {
 		return professorRepository.findById(id).orElse(null);
 	}
 
-	public Professor findByCpf(String cpf) throws ServiceNotFindException {
+	public Professor findByCpf(String cpf) {
 		return professorRepository.findByCpf(cpf).orElse(null);
 	}
 
@@ -46,14 +46,14 @@ public class ProfessorService {
 		return saveInternal(professor);
 	}
 
-	public Professor update(Professor professor) throws ServiceNotFindException {
+	public Professor update(Professor professor) throws EntityNotFoundException {
 		if (professor.getId() != null && professorRepository.existsById(professor.getId())) {
 			return saveInternal(professor);
 		} else
-			throw new ServiceNotFindException("Professor doesn't exist");
+			throw new EntityNotFoundException("Professor doesn't exist");
 	}
 
-	public void deleteById(Long id) throws ServiceNotFindException {
+	public void deleteById(Long id) throws EntityNotFoundException {
 		if (id != null && professorRepository.existsById(id)) {
 			professorRepository.deleteById(id);
 		}

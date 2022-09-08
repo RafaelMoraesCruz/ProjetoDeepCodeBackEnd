@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.service.DepartmentService;
-import com.project.professor.allocation.service.exception.ServiceNotFindException;
+import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -83,7 +83,7 @@ public class DepartmentController {
 	
 	@DeleteMapping(path = "/{department_id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<Void> deleteById(@PathVariable(name = "department_id") Long id) throws ServiceNotFindException {
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "department_id") Long id) throws EntityNotFoundException {
 	    departmentService.deleteById(id);
 	    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

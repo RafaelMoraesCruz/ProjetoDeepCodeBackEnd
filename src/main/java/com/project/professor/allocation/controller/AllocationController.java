@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.professor.allocation.entity.Allocation;
 import com.project.professor.allocation.service.AllocationService;
-import com.project.professor.allocation.service.exception.ServiceAllocationTimeException;
-import com.project.professor.allocation.service.exception.ServiceColissiontException;
-import com.project.professor.allocation.service.exception.ServiceNotFindException;
+import com.project.professor.allocation.service.exception.AllocationTimeException;
+import com.project.professor.allocation.service.exception.ColissiontException;
+import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -98,7 +98,7 @@ public class AllocationController {
 		try {
 			allocation = allocationService.save(allocation);
 			return new ResponseEntity<Allocation>(allocation, HttpStatus.CREATED);
-		} catch (ServiceAllocationTimeException | ServiceColissiontException | ServiceNotFindException e) {
+		} catch (AllocationTimeException | ColissiontException | EntityNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -116,7 +116,7 @@ public class AllocationController {
 		try {
 			allocation = allocationService.update(allocation);
 			return new ResponseEntity<Allocation>(allocation, HttpStatus.OK);
-		} catch (ServiceNotFindException | ServiceAllocationTimeException | ServiceColissiontException e) {
+		} catch (EntityNotFoundException | AllocationTimeException | ColissiontException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception ex) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -133,7 +133,7 @@ public class AllocationController {
 		try {
 			allocationService.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		} catch (ServiceNotFindException e) {
+		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
