@@ -53,12 +53,11 @@ public class AllocationService {
 
 	}
 
-	public Allocation update(Allocation allocation)
-			throws EntityNotFoundException, AllocationTimeException, ColissiontException {
+	public Allocation update(Allocation allocation) throws AllocationTimeException, ColissiontException, EntityNotFoundException {
 		if (allocation.getId() != null && allocationRepository.existsById(allocation.getId())) {
 			return saveInternal(allocation);
 		} else {
-			throw new EntityNotFoundException("Allocation doesn't exist");
+			return null;
 		}
 	}
 
@@ -69,9 +68,7 @@ public class AllocationService {
 	public void deleteById(Long id) throws EntityNotFoundException {
 		if (id != null && allocationRepository.existsById(id)) {
 			allocationRepository.deleteById(id);
-		} else {
-			throw new EntityNotFoundException("Allocation doesn't exist");
-		}
+		} 
 	}
 
 	private Allocation saveInternal(Allocation allocation)
