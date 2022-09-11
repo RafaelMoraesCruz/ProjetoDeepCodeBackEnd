@@ -103,7 +103,7 @@ public class AllocationController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Allocation> upadate(@PathVariable(name = "allocation_id") Long id,
 			@RequestBody Allocation allocation) {
-
+		allocation.setId(id);
 		try {
 			allocation = allocationService.update(allocation);
 			if (allocation == null) {

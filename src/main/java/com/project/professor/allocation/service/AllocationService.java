@@ -53,7 +53,8 @@ public class AllocationService {
 
 	}
 
-	public Allocation update(Allocation allocation) throws AllocationTimeException, ColissiontException, EntityNotFoundException {
+	public Allocation update(Allocation allocation)
+			throws AllocationTimeException, ColissiontException, EntityNotFoundException {
 		if (allocation.getId() != null && allocationRepository.existsById(allocation.getId())) {
 			return saveInternal(allocation);
 		} else {
@@ -68,7 +69,7 @@ public class AllocationService {
 	public void deleteById(Long id) throws EntityNotFoundException {
 		if (id != null && allocationRepository.existsById(id)) {
 			allocationRepository.deleteById(id);
-		} 
+		}
 	}
 
 	private Allocation saveInternal(Allocation allocation)
@@ -76,15 +77,17 @@ public class AllocationService {
 
 		if (isEndHourGreaterThanStartHour(allocation)) {
 			if (!hasCollission(allocation)) {
-				allocation = allocationRepository.save(allocation);
 
-				Professor professor = professorService.findById(allocation.getProfessorId());
-				allocation.setProfessor(professor);
-
-				Course course = courseService.findById(allocation.getCourseId());
-				allocation.setCourse(course);
-
-				return allocation;
+				try {
+					Professor professor = professorService.findById(allocation.getProfessorId());
+					Course course = courseService.findById(allocation.getCourseId());
+					allocation = allocationRepository.save(allocation);
+					allocation.setProfessor(professor);
+					allocation.setCourse(course);
+					return allocation;
+				} catch (Exception e) {
+					throw new EntityNotFoundException("Professor or course not found");
+				}
 			} else {
 				throw new ColissiontException("For this allocation time Profesor already allocation");
 			}
