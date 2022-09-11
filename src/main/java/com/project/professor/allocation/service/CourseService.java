@@ -17,12 +17,12 @@ import net.bytebuddy.implementation.bytecode.Throw;
 public class CourseService {
 
 	private final CourseRepository courseRepository;
-	private final AllocationService allocationService;
+	private final AllocationRepository allocationRepository;
 
-	public CourseService(CourseRepository courseRepository, AllocationService allocationService) {
+	public CourseService(CourseRepository courseRepository, AllocationRepository allocationRepository) {
 		super();
 		this.courseRepository = courseRepository;
-		this.allocationService = allocationService;
+		this.allocationRepository = allocationRepository;
 	}
 
 	public List<Course> findByNameContaining(String name) {
@@ -56,7 +56,7 @@ public class CourseService {
 	}
 
 	public void deleteById(Long id) throws EntityNotFoundException {
-		if (id != null && courseRepository.existsById(id)&& allocationService.findByCourseId(id) != null) {
+		if (id != null && courseRepository.existsById(id)&& allocationRepository.findByCourseId(id) != null) {
 			courseRepository.deleteById(id);
 		} else {
 			throw new EntityNotFoundException("Course doesn't find");

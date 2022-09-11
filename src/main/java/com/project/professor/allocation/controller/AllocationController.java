@@ -70,7 +70,9 @@ public class AllocationController {
 
 	
 	@ApiOperation(value = "Find allocations by course")
-	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request") })
+	@ApiResponses({ 
+			@ApiResponse(code = 200, message = "OK"), 
+			@ApiResponse(code = 400, message = "Bad Request") })
 	@GetMapping(path = "/course/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Allocation>> findByCourse(@PathVariable(name = "course_id") Long courseId) {
