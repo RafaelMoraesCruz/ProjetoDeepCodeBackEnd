@@ -46,7 +46,7 @@ public class DepartmentService {
 	}
 
 	public void deleteById(Long id) throws EntityNotFoundException {
-		if (id != null && departmentRepository.existsById(id)) {
+		if (id != null && departmentRepository.existsById(id) && departmentRepository.findByDepartmentId(id) != null) {
 			departmentRepository.deleteById(id);
 		} else {
 			throw new EntityNotFoundException("Department ID doesnt exists");
