@@ -7,16 +7,19 @@ import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.repository.DepartmentRepository;
+import com.project.professor.allocation.repository.ProfessorRepository;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 @Service
 public class DepartmentService {
 
 	private final DepartmentRepository departmentRepository;
+	private final ProfessorRepository professorRepository;
 
-	public DepartmentService(DepartmentRepository departmentRepository) {
+	public DepartmentService(DepartmentRepository departmentRepository, ProfessorRepository professorRepository) {
 		super();
 		this.departmentRepository = departmentRepository;
+		this.professorRepository = professorRepository;
 	}
 
 	public List<Department> findByNameContaining(String name) {
@@ -46,7 +49,7 @@ public class DepartmentService {
 	}
 
 	public void deleteById(Long id) throws EntityNotFoundException {
-		if (id != null && departmentRepository.existsById(id) && departmentRepository.findByDepartmentId(id) != null) {
+		if (id != null && departmentRepository.existsById(id) && professorRepository.findByDepartmentId(id) == null) {
 			departmentRepository.deleteById(id);
 		} else {
 			throw new EntityNotFoundException("Department ID doesnt exists");

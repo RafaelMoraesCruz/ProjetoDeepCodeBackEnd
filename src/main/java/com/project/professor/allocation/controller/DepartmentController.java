@@ -112,7 +112,7 @@ public class DepartmentController {
 		}
 	}
 
-	@ApiOperation(value = "Delete all professors")
+	@ApiOperation(value = "Delete all Department")
 	@ApiResponses({ @ApiResponse(code = 204, message = "No Content") })
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
