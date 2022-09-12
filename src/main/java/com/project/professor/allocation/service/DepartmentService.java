@@ -41,7 +41,7 @@ public class DepartmentService {
 		if (department.getId() != null && departmentRepository.existsById(department.getId())) {
 			return departmentRepository.save(department);
 		} else {
-			throw new EntityNotFoundException("Department doenst exists");
+			return null;
 		}
 	}
 

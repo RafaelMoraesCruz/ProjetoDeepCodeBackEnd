@@ -95,10 +95,10 @@ public class CourseController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Course> update(@PathVariable(name = "course_id") Long id, @RequestBody Course course)
 			throws EntityNotFoundException {
+		course.setId(id);
 		try {
-			if (courseService.findById(id) != null) {
-				course.setId(id);
-				courseService.update(course);
+			course = courseService.update(course);
+			if (course != null) {
 				return new ResponseEntity<Course>(course, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);

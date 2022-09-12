@@ -51,7 +51,7 @@ public class CourseService {
 		if (course.getId() != null && courseRepository.existsById(course.getId())) {
 			return courseRepository.save(course);
 		} else {
-			throw new EntityNotFoundException("Course doesn't find");
+			return null;
 		}
 	}
 
