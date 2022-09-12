@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.repository.AllocationRepository;
 import com.project.professor.allocation.repository.CourseRepository;
+import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 import net.bytebuddy.implementation.bytecode.Throw;
@@ -55,9 +56,13 @@ public class CourseService {
 		}
 	}
 
-	public void deleteById(Long id) throws EntityNotFoundException {
-		if (id != null && courseRepository.existsById(id)&& allocationRepository.findByCourseId(id) != null) {
-			courseRepository.deleteById(id);
+	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
+		if (id != null && courseRepository.existsById(id)) {
+			if (allocationRepository.findByCourseId(id) != null) {
+				throw new AllocationExistsException("Course have allocation");
+			} else {
+				courseRepository.deleteById(id);
+			}
 		} else {
 			throw new EntityNotFoundException("Course doesn't find");
 		}

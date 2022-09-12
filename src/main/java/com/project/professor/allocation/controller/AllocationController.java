@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.professor.allocation.entity.Allocation;
 import com.project.professor.allocation.service.AllocationService;
+import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.AllocationTimeException;
 import com.project.professor.allocation.service.exception.ColissiontException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
@@ -57,7 +58,6 @@ public class AllocationController {
 		return new ResponseEntity<Allocation>(allocation, HttpStatus.OK);
 	}
 
-	
 	@ApiOperation(value = "Find allocations by professor")
 	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request") })
 	@GetMapping(path = "/professor/{professor_id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,11 +68,8 @@ public class AllocationController {
 		return new ResponseEntity<>(allocatioProfessor, HttpStatus.OK);
 	}
 
-	
 	@ApiOperation(value = "Find allocations by course")
-	@ApiResponses({ 
-			@ApiResponse(code = 200, message = "OK"), 
-			@ApiResponse(code = 400, message = "Bad Request") })
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request") })
 	@GetMapping(path = "/course/{course_id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Allocation>> findByCourse(@PathVariable(name = "course_id") Long courseId) {
@@ -81,7 +78,6 @@ public class AllocationController {
 		return new ResponseEntity<>(allocatioCourse, HttpStatus.OK);
 	}
 
-	
 	@ApiOperation(value = "Save allocation")
 	@ApiResponses({ @ApiResponse(code = 201, message = "OK"), @ApiResponse(code = 400, message = "Bad request") })
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -95,11 +91,8 @@ public class AllocationController {
 		}
 	}
 
-	
 	@ApiOperation(value = "Update an allocation")
-	@ApiResponses({ 
-			@ApiResponse(code = 200, message = "OK"), 
-			@ApiResponse(code = 400, message = "Bad Request"),
+	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request"),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@PutMapping(path = "/{allocation_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -118,7 +111,6 @@ public class AllocationController {
 		}
 	}
 
-	
 	@ApiOperation(value = "Delete allocation by ID")
 	@ApiResponses({ 
 			@ApiResponse(code = 204, message = "No content"),
@@ -131,10 +123,9 @@ public class AllocationController {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		} 
 	}
 
-	
 	@ApiOperation(value = "Delete all allocation")
 	@ApiResponses({ @ApiResponse(code = 204, message = "No content") })
 	@DeleteMapping
