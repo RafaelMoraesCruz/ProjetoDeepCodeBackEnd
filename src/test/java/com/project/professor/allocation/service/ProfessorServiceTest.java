@@ -70,7 +70,7 @@ public class ProfessorServiceTest {
 		try {
 			Professor prof1 = professorService.update(prof);
 			System.out.println(prof1);
-		} catch (EntityNotFoundException e) {
+		} catch (Exception e) {
 			e.getMessage();
 		}
 

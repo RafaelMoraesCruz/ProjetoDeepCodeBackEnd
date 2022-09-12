@@ -140,7 +140,7 @@ public class ProfessorController {
 			} else {
 				return new ResponseEntity<>(professor, HttpStatus.OK);
 			}
-		} catch (EntityNotFoundException e) {
+		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}

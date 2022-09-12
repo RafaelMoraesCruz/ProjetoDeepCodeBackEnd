@@ -46,11 +46,13 @@ public class ProfessorService {
 		return saveInternal(professor);
 	}
 
-	public Professor update(Professor professor) throws EntityNotFoundException {
+	public Professor update(Professor professor) {
 		if (professor.getId() != null && professorRepository.existsById(professor.getId())) {
 			return saveInternal(professor);
-		} else
-			throw new EntityNotFoundException("Professor doesn't exist");
+		} else {
+			return null;
+		}
+
 	}
 
 	public void deleteById(Long id) throws EntityNotFoundException {
