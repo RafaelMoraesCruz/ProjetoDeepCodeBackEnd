@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.entity.Professor;
+import com.project.professor.allocation.repository.AllocationRepository;
 import com.project.professor.allocation.repository.ProfessorRepository;
+import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
@@ -14,10 +16,14 @@ public class ProfessorService {
 
 	private final ProfessorRepository professorRepository;
 	private final DepartmentService departmentService;
+	private final AllocationRepository allocationRepository;
 
-	public ProfessorService(ProfessorRepository professorRepository, DepartmentService departmentService) {
+	public ProfessorService(ProfessorRepository professorRepository, DepartmentService departmentService,
+			AllocationRepository allocationRepository) {
+		super();
 		this.professorRepository = professorRepository;
 		this.departmentService = departmentService;
+		this.allocationRepository = allocationRepository;
 	}
 
 	public List<Professor> findAll() {
@@ -55,9 +61,15 @@ public class ProfessorService {
 
 	}
 
-	public void deleteById(Long id) throws EntityNotFoundException {
+	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
 		if (id != null && professorRepository.existsById(id)) {
-			professorRepository.deleteById(id);
+			if (allocationRepository.findByProfessorId(id) != null) {
+				throw new AllocationExistsException("This professor allocation");
+			} else {
+				professorRepository.deleteById(id);
+			}
+		} else {
+			throw new EntityNotFoundException("Professor ID doesnt exist");
 		}
 	}
 
