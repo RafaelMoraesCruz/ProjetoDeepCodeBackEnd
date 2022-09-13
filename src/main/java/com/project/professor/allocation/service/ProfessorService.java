@@ -58,7 +58,6 @@ public class ProfessorService {
 		} else {
 			return null;
 		}
-
 	}
 
 	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
