@@ -61,7 +61,15 @@ public class DepartmentService {
 		}
 	}
 
-	public void deleteAll() {
+	public void deleteAll() throws AllocationExistsException {
+		
+		List<Department> departments = departmentRepository.findAll();
+		
+		for (Department department : departments) {
+			if(professorRepository.findByDepartmentId(department.getId()) != null){
+				throw new AllocationExistsException("Department have professor allocation");
+			}
+		}
 		departmentRepository.deleteAllInBatch();
 	}
 

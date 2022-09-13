@@ -1,5 +1,6 @@
 package com.project.professor.allocation.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +60,7 @@ public class CourseService {
 	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
 		if (id != null && courseRepository.existsById(id)) {
 			if (allocationRepository.findByCourseId(id) != null) {
-				throw new AllocationExistsException("Course have allocation");
+				throw new AllocationExistsException("This Course have allocation");
 			} else {
 				courseRepository.deleteById(id);
 			}
@@ -68,7 +69,15 @@ public class CourseService {
 		}
 	}
 
-	public void deleteAll() {
+	public void deleteAll() throws AllocationExistsException {
+		
+		List<Course> courses = courseRepository.findAll();
+		
+		for (Course course : courses) {
+			if(allocationRepository.findByCourseId(course.getId()) != null) {
+				throw new AllocationExistsException("Course have allocation");
+			}
+		}
 		courseRepository.deleteAllInBatch();
 	}
 

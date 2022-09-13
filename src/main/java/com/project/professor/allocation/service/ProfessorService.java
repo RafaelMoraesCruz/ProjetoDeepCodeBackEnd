@@ -73,7 +73,15 @@ public class ProfessorService {
 		}
 	}
 
-	public void deleteAll() {
+	public void deleteAll() throws AllocationExistsException {
+
+		List<Professor> professors = professorRepository.findAll();
+
+		for (Professor professor : professors) {
+			if (allocationRepository.findByProfessorId(professor.getId()) != null) {
+				throw new AllocationExistsException("Professor allocation");
+			}
+		}
 		professorRepository.deleteAllInBatch();
 	}
 

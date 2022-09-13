@@ -127,7 +127,11 @@ public class DepartmentController {
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteAll() {
-		departmentService.deleteAll();
+		try {
+			departmentService.deleteAll();
+		} catch (AllocationExistsException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

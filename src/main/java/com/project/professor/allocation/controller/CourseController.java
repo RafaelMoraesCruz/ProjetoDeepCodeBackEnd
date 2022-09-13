@@ -109,7 +109,11 @@ public class CourseController {
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteAll() {
-		courseService.deleteAll();
+		try {
+			courseService.deleteAll();
+		} catch (AllocationExistsException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 

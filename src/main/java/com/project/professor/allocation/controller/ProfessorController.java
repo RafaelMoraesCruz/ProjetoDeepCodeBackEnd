@@ -154,14 +154,15 @@ public class ProfessorController {
 	@DeleteMapping(path = "/{professor_id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteById(@PathVariable(name = "professor_id") Long id){
+		
 		try {
 			professorService.deleteById(id);
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch(AllocationExistsException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@ApiOperation(value = "Delete all professors")
@@ -171,7 +172,12 @@ public class ProfessorController {
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> deleteAll() {
-		professorService.deleteAll();
+		
+		try {
+			professorService.deleteAll();
+		} catch (AllocationExistsException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
