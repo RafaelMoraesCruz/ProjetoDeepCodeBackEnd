@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.repository.DepartmentRepository;
 import com.project.professor.allocation.repository.ProfessorRepository;
+import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 @Service
@@ -48,9 +49,13 @@ public class DepartmentService {
 		}
 	}
 
-	public void deleteById(Long id) throws EntityNotFoundException {
-		if (id != null && departmentRepository.existsById(id) && professorRepository.findByDepartmentId(id) == null) {
-			departmentRepository.deleteById(id);
+	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
+		if (id != null && departmentRepository.existsById(id)) {
+			if (professorRepository.findByDepartmentId(id) != null) {
+				throw new AllocationExistsException("This department have professor allocation");
+			} else {
+				departmentRepository.deleteById(id);
+			}
 		} else {
 			throw new EntityNotFoundException("Department ID doesnt exists");
 		}

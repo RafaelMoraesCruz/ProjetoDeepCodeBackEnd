@@ -119,7 +119,7 @@ public class CourseController {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@DeleteMapping(path = "/{course_id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<Void> deleteById(@PathVariable(name = "course_id") Long id) throws EntityNotFoundException {
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "course_id") Long id){
 		try {
 			courseService.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);

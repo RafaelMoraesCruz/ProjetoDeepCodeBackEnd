@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.service.DepartmentService;
+import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 import io.swagger.annotations.ApiOperation;
@@ -52,7 +53,9 @@ public class DepartmentController {
 	}
 
 	@ApiOperation(value = "Find a department")
-	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request"),
+	@ApiResponses({ 
+			@ApiResponse(code = 200, message = "OK"), 
+			@ApiResponse(code = 400, message = "Bad Request"),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@GetMapping(path = "/{department_id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -66,7 +69,9 @@ public class DepartmentController {
 	}
 
 	@ApiOperation(value = "Save a department")
-	@ApiResponses({ @ApiResponse(code = 201, message = "Created"), @ApiResponse(code = 400, message = "Bad Request") })
+	@ApiResponses({ 
+			@ApiResponse(code = 201, message = "Created"), 
+			@ApiResponse(code = 400, message = "Bad Request") })
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Department> save(@RequestBody Department department) {
@@ -79,7 +84,9 @@ public class DepartmentController {
 	}
 
 	@ApiOperation(value = "Update a department")
-	@ApiResponses({ @ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request"),
+	@ApiResponses({ 
+			@ApiResponse(code = 200, message = "OK"), 
+			@ApiResponse(code = 400, message = "Bad Request"),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@PutMapping(path = "/{department_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -99,14 +106,17 @@ public class DepartmentController {
 	}
 
 	@ApiOperation(value = "Delete a Department")
-	@ApiResponses({ @ApiResponse(code = 204, message = "No Content"), @ApiResponse(code = 404, message = "Not Found") })
+	@ApiResponses({ 
+			@ApiResponse(code = 204, message = "No Content"), 
+			@ApiResponse(code = 404, message = "Not Found") })
 	@DeleteMapping(path = "/{department_id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<Void> deleteById(@PathVariable(name = "department_id") Long id)
-			throws EntityNotFoundException {
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "department_id") Long id){
 		try {
 			departmentService.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (AllocationExistsException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
