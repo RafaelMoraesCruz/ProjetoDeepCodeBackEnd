@@ -3,6 +3,7 @@ package com.project.professor.allocation.service;
 import java.util.List;
 
 import com.project.professor.allocation.entity.Professor;
+import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
 
 import org.junit.jupiter.api.Test;
@@ -81,14 +82,18 @@ public class ProfessorServiceTest {
 
 		try {
 			professorService.deleteById(4l);
-		} catch (EntityNotFoundException e) {
+		} catch (EntityNotFoundException | AllocationExistsException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
 	@Test
 	public void deleteAll() {
-		professorService.deleteAll();
+		try {
+			professorService.deleteAll();
+		} catch (AllocationExistsException e) {
+			e.getMessage();
+		}
 	}
 
 }
