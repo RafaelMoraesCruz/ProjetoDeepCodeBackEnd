@@ -7,5 +7,5 @@ This is a simple CRUD project (backend) using java. The objective here is to pro
 <ol>
   <li>This project was made in eclipse IDE, so, we strongly recommend you to use eclipse IDE</li>
   <li>Remember to import the project using maeven, we recommend you to check out this link<a href="https://www.lagomframework.com/documentation/1.6.x/java/EclipseMavenInt.html">https://www.lagomframework.com/documentation/1.6.x/java/EclipseMavenInt.html</a></li>
-  <l1>After executing the application, check out <a href="http://localhost:8080/swagger-ui/index.html#/">http://localhost:8080/swagger-ui/index.html#/</a> to see the results, but remember, the default port can be diferent, so make sure to have the correct port on "localhost:8080" part.</li>
+  <li>After executing the application, check out <a href="http://localhost:8080/swagger-ui/index.html#/">http://localhost:8080/swagger-ui/index.html#/</a> to see the results, but remember, the default port can be diferent, so make sure to have the correct port on "localhost:8080" part.</li>
 <ol>
