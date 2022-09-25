@@ -1,19 +1,16 @@
 package com.project.professor.allocation.service;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-
-import org.hibernate.service.spi.ServiceException;
-import org.springframework.stereotype.Service;
 
 import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.repository.AllocationRepository;
 import com.project.professor.allocation.repository.CourseRepository;
 import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
+import com.project.professor.allocation.service.exception.InvalidName;
+import com.project.professor.allocation.service.exception.NameAlreadyExists;
 
-import net.bytebuddy.implementation.bytecode.Throw;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CourseService {
@@ -43,10 +40,10 @@ public class CourseService {
 
 	}
 
-	public Course save(Course course) {
+	public Course save(Course course) throws NameAlreadyExists, InvalidName {
 		course.setId(null);
+		isNomeValido(course);
 		return courseRepository.save(course);
-
 	}
 
 	public Course update(Course course) throws EntityNotFoundException {
@@ -70,15 +67,27 @@ public class CourseService {
 	}
 
 	public void deleteAll() throws AllocationExistsException {
-		
+
 		List<Course> courses = courseRepository.findAll();
-		
+
 		for (Course course : courses) {
-			if(allocationRepository.findByCourseId(course.getId()) != null) {
+			if (allocationRepository.findByCourseId(course.getId()) != null) {
 				throw new AllocationExistsException("Course have allocation");
 			}
 		}
 		courseRepository.deleteAllInBatch();
 	}
 
+	public boolean isNomeValido(Course course) throws NameAlreadyExists, InvalidName {
+		if (course.getName().strip().length() < 2) {
+			throw new InvalidName("Course name is invalid.");
+		}
+		for (Course courseInCursos : courseRepository.findAll()) {
+			if (course.getName().equalsIgnoreCase(courseInCursos.getName())) {
+				throw new NameAlreadyExists("Course name is already taken.");
+			}
+
+		}
+		return true;
+	}
 }
