@@ -42,11 +42,12 @@ public class CourseService {
 
 	public Course save(Course course) throws NameAlreadyExists, InvalidName {
 		course.setId(null);
-		isNomeValido(course);
+		isNameValid(course);
 		return courseRepository.save(course);
 	}
 
-	public Course update(Course course) throws EntityNotFoundException {
+	public Course update(Course course) throws EntityNotFoundException, NameAlreadyExists, InvalidName {
+		isNameValid(course);
 		if (course.getId() != null && courseRepository.existsById(course.getId())) {
 			return courseRepository.save(course);
 		} else {
@@ -78,7 +79,7 @@ public class CourseService {
 		courseRepository.deleteAllInBatch();
 	}
 
-	public boolean isNomeValido(Course course) throws NameAlreadyExists, InvalidName {
+	public boolean isNameValid(Course course) throws NameAlreadyExists, InvalidName {
 		if (course.getName().strip().length() < 2) {
 			throw new InvalidName("Course name is invalid.");
 		}

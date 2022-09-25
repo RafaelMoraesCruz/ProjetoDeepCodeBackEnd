@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.repository.DepartmentRepository;
 import com.project.professor.allocation.repository.ProfessorRepository;
 import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
+import com.project.professor.allocation.service.exception.InvalidName;
+import com.project.professor.allocation.service.exception.NameAlreadyExists;
 
 @Service
 public class DepartmentService {
@@ -35,12 +38,14 @@ public class DepartmentService {
 		return departmentRepository.findAll();
 	}
 
-	public Department save(Department department) {
+	public Department save(Department department) throws NameAlreadyExists, InvalidName {
 		department.setId(null);
+		isNameValid(department);
 		return departmentRepository.save(department);
 	}
 
-	public Department update(Department department) throws EntityNotFoundException {
+	public Department update(Department department) throws EntityNotFoundException, NameAlreadyExists, InvalidName {
+		isNameValid(department);
 		if (department.getId() != null && departmentRepository.existsById(department.getId())) {
 			return departmentRepository.save(department);
 		} else {
@@ -70,6 +75,19 @@ public class DepartmentService {
 			}
 		}
 		departmentRepository.deleteAllInBatch();
+	}
+	
+	public boolean isNameValid(Department department) throws NameAlreadyExists, InvalidName {
+		if (department.getName().strip().length() < 2) {
+			throw new InvalidName("Course name is invalid.");
+		}
+		for (Department departmentInDepartments : departmentRepository.findAll()) {
+			if (department.getName().equalsIgnoreCase(departmentInDepartments.getName())) {
+				throw new NameAlreadyExists("Course name is already taken.");
+			}
+
+		}
+		return true;
 	}
 
 }
