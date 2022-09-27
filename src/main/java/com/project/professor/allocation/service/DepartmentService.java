@@ -10,8 +10,8 @@ import com.project.professor.allocation.repository.DepartmentRepository;
 import com.project.professor.allocation.repository.ProfessorRepository;
 import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
-import com.project.professor.allocation.service.exception.InvalidName;
-import com.project.professor.allocation.service.exception.NameAlreadyExists;
+import com.project.professor.allocation.service.exception.InvalidNameException;
+import com.project.professor.allocation.service.exception.NameAlreadyExistsException;
 
 @Service
 public class DepartmentService {
@@ -38,13 +38,13 @@ public class DepartmentService {
 		return departmentRepository.findAll();
 	}
 
-	public Department save(Department department) throws NameAlreadyExists, InvalidName {
+	public Department save(Department department) throws NameAlreadyExistsException, InvalidNameException {
 		department.setId(null);
 		isNameValid(department);
 		return departmentRepository.save(department);
 	}
 
-	public Department update(Department department) throws EntityNotFoundException, NameAlreadyExists, InvalidName {
+	public Department update(Department department) throws EntityNotFoundException, NameAlreadyExistsException, InvalidNameException {
 		isNameValid(department);
 		if (department.getId() != null && departmentRepository.existsById(department.getId())) {
 			return departmentRepository.save(department);
@@ -77,13 +77,13 @@ public class DepartmentService {
 		departmentRepository.deleteAllInBatch();
 	}
 	
-	public boolean isNameValid(Department department) throws NameAlreadyExists, InvalidName {
+	public boolean isNameValid(Department department) throws NameAlreadyExistsException, InvalidNameException {
 		if (department.getName().strip().length() < 2) {
-			throw new InvalidName("Course name is invalid.");
+			throw new InvalidNameException("Course name is invalid.");
 		}
 		for (Department departmentInDepartments : departmentRepository.findAll()) {
 			if (department.getName().equalsIgnoreCase(departmentInDepartments.getName())) {
-				throw new NameAlreadyExists("Course name is already taken.");
+				throw new NameAlreadyExistsException("Course name is already taken.");
 			}
 
 		}

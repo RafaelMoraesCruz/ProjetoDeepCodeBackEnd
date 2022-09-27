@@ -7,8 +7,8 @@ import com.project.professor.allocation.repository.AllocationRepository;
 import com.project.professor.allocation.repository.CourseRepository;
 import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
-import com.project.professor.allocation.service.exception.InvalidName;
-import com.project.professor.allocation.service.exception.NameAlreadyExists;
+import com.project.professor.allocation.service.exception.InvalidNameException;
+import com.project.professor.allocation.service.exception.NameAlreadyExistsException;
 
 import org.springframework.stereotype.Service;
 
@@ -40,13 +40,13 @@ public class CourseService {
 
 	}
 
-	public Course save(Course course) throws NameAlreadyExists, InvalidName {
+	public Course save(Course course) throws NameAlreadyExistsException, InvalidNameException {
 		course.setId(null);
 		isNameValid(course);
 		return courseRepository.save(course);
 	}
 
-	public Course update(Course course) throws EntityNotFoundException, NameAlreadyExists, InvalidName {
+	public Course update(Course course) throws EntityNotFoundException, NameAlreadyExistsException, InvalidNameException {
 		isNameValid(course);
 		if (course.getId() != null && courseRepository.existsById(course.getId())) {
 			return courseRepository.save(course);
@@ -79,13 +79,13 @@ public class CourseService {
 		courseRepository.deleteAllInBatch();
 	}
 
-	public boolean isNameValid(Course course) throws NameAlreadyExists, InvalidName {
+	public boolean isNameValid(Course course) throws NameAlreadyExistsException, InvalidNameException {
 		if (course.getName().strip().length() < 2) {
-			throw new InvalidName("Course name is invalid.");
+			throw new InvalidNameException("Course name is invalid.");
 		}
 		for (Course courseInCursos : courseRepository.findAll()) {
 			if (course.getName().equalsIgnoreCase(courseInCursos.getName())) {
-				throw new NameAlreadyExists("Course name is already taken.");
+				throw new NameAlreadyExistsException("Course name is already taken.");
 			}
 
 		}
