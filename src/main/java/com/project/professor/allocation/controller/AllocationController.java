@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController()
-@RequestMapping(path = "/allocation")
+@RequestMapping(path = "/allocations")
 public class AllocationController {
 
 	private AllocationService allocationService;

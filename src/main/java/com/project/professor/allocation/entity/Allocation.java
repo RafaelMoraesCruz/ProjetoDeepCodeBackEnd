@@ -37,7 +37,7 @@ public class Allocation {
 	@Column(name = "DayOfweek", nullable = false, length = 16)
 	private DayOfWeek day;
 
-	@ApiModelProperty(example = "10:00-0300")
+	@ApiModelProperty(example = "10:00-03:00")
 	@JsonFormat(pattern = "HH:mmZ")
     @JsonSerialize(using = DateSerializer.class)
     @JsonDeserialize(using = DateDeserializers.DateDeserializer.class)
@@ -45,7 +45,7 @@ public class Allocation {
 	@Column(name = "Start", nullable = false)
 	private Date start;
 
-	@ApiModelProperty(example = "10:00-0300")
+	@ApiModelProperty(example = "10:00-03:00")
 	@JsonFormat(pattern = "HH:mmZ")
     @JsonSerialize(using = DateSerializer.class)
     @JsonDeserialize(using = DateDeserializers.DateDeserializer.class)
