@@ -53,7 +53,8 @@ public class ProfessorService {
 	}
 
 	public Professor update(Professor professor) {
-		if (professor.getId() != null && professorRepository.existsById(professor.getId())) {
+		if (professor.getId() != null && professorRepository.existsById(professor.getId())
+				&& professorValidation(professor)) {
 			return saveInternal(professor);
 		} else {
 			return null;
@@ -84,15 +85,27 @@ public class ProfessorService {
 		professorRepository.deleteAllInBatch();
 	}
 
+	public boolean professorValidation(Professor professor) {
+		if (professor.getName().isEmpty() || professor.getName().length() < 3) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public Professor saveInternal(Professor professor) {
 
-		Long dptId = professor.getDepartmentId();
-		Department dpt = departmentService.findById(dptId);
+		if (professorValidation(professor)) {
+			Long dptId = professor.getDepartmentId();
+			Department dpt = departmentService.findById(dptId);
 
-		Professor prof = professorRepository.save(professor);
-		prof.setDepartment(dpt);
+			Professor prof = professorRepository.save(professor);
+			prof.setDepartment(dpt);
 
-		return prof;
+			return prof;
+		} else {
+			return null;
+		}
 	}
 
 }

@@ -37,9 +37,7 @@ public class ProfessorController {
 	}
 
 	@ApiOperation(value = "Find all professors")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "OK")
-    })
+    @ApiResponses({@ApiResponse(code = 200, message = "OK")})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Professor>> findAll(@RequestParam(name = "name", required = false) String name)
@@ -117,7 +115,12 @@ public class ProfessorController {
 	public ResponseEntity<Professor> save(@RequestBody Professor professor) {
 		try {
 			professor = professorService.save(professor);
-			return new ResponseEntity<Professor>(professor, HttpStatus.CREATED);
+			if(professor != null) {
+				return new ResponseEntity<Professor>(professor, HttpStatus.CREATED);	
+			}else {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+			}
+			
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
