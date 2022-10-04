@@ -63,8 +63,9 @@ public class ProfessorService {
 
 	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
 		if (id != null && professorRepository.existsById(id)) {
-			if (allocationRepository.findByProfessorId(id) != null) {
-				throw new AllocationExistsException("This professor allocation");
+			if (allocationRepository.findByProfessorId(id).isEmpty()) {
+				throw new AllocationExistsException("This professor have allocation");
+				
 			} else {
 				professorRepository.deleteById(id);
 			}
@@ -78,7 +79,7 @@ public class ProfessorService {
 		List<Professor> professors = professorRepository.findAll();
 
 		for (Professor professor : professors) {
-			if (allocationRepository.findByProfessorId(professor.getId()) != null) {
+			if (allocationRepository.findByProfessorId(professor.getId()).isEmpty()) {
 				throw new AllocationExistsException("Professor allocation");
 			}
 		}

@@ -152,6 +152,7 @@ public class ProfessorController {
 	@ApiOperation(value = "Delete a professor")
 	    @ApiResponses({
 	            @ApiResponse(code = 204, message = "No Content"),
+	            @ApiResponse(code = 400, message = "Bad Request"),
 	            @ApiResponse(code = 404, message = "Not Found")
 	    })
 	@DeleteMapping(path = "/{professor_id}")
