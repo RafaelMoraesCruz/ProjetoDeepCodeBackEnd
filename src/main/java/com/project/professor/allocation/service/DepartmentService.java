@@ -70,7 +70,7 @@ public class DepartmentService {
 		List<Department> departments = departmentRepository.findAll();
 		
 		for (Department department : departments) {
-			if(professorRepository.findByDepartmentId(department.getId()) != null){
+			if(professorRepository.findByDepartmentId(department.getId()).size() > 0){
 				throw new AllocationExistsException("Department have professor allocation");
 			}
 		}
