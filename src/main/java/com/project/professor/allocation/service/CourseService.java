@@ -72,7 +72,7 @@ public class CourseService {
 		List<Course> courses = courseRepository.findAll();
 
 		for (Course course : courses) {
-			if (allocationRepository.findByCourseId(course.getId()) != null) {
+			if (allocationRepository.findByCourseId(course.getId()).size() > 0) {
 				throw new AllocationExistsException("Course have allocation");
 			}
 		}

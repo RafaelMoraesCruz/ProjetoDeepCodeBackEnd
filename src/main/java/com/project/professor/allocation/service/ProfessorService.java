@@ -79,7 +79,7 @@ public class ProfessorService {
 		List<Professor> professors = professorRepository.findAll();
 
 		for (Professor professor : professors) {
-			if (allocationRepository.findByProfessorId(professor.getId()).isEmpty()) {
+			if (allocationRepository.findByProfessorId(professor.getId()).size() > 0) {
 				throw new AllocationExistsException("Professor allocation");
 			}
 		}
