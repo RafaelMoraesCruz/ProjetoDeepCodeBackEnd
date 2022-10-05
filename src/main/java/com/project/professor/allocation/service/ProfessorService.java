@@ -63,7 +63,7 @@ public class ProfessorService {
 
 	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
 		if (id != null && professorRepository.existsById(id)) {
-			if (allocationRepository.findByProfessorId(id).isEmpty()) {
+			if (allocationRepository.findByProfessorId(id).size()>0) {
 				throw new AllocationExistsException("This professor have allocation");
 				
 			} else {

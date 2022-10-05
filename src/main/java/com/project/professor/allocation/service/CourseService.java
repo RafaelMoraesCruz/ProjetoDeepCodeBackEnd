@@ -57,7 +57,7 @@ public class CourseService {
 
 	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
 		if (id != null && courseRepository.existsById(id)) {
-			if (allocationRepository.findByCourseId(id) != null) {
+			if (allocationRepository.findByCourseId(id).size() > 0) {
 				throw new AllocationExistsException("This Course have allocation");
 			} else {
 				courseRepository.deleteById(id);

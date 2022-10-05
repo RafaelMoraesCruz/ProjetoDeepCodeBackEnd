@@ -55,7 +55,7 @@ public class DepartmentService {
 
 	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
 		if (id != null && departmentRepository.existsById(id)) {
-			if (professorRepository.findByDepartmentId(id) != null) {
+			if (professorRepository.findByDepartmentId(id).size() > 0) {
 				throw new AllocationExistsException("This department have professor allocation");
 			} else {
 				departmentRepository.deleteById(id);
