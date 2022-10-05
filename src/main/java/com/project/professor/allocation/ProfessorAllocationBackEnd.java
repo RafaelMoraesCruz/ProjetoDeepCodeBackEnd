@@ -9,5 +9,4 @@ public class ProfessorAllocationBackEnd {
 	public static void main(String[] args) {
 		SpringApplication.run(ProfessorAllocationBackEnd.class, args);
 	}
-
 }
