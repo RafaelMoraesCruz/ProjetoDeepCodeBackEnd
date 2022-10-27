@@ -20,6 +20,8 @@ import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.service.CourseService;
 import com.project.professor.allocation.service.exception.AllocationExistsException;
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
+import com.project.professor.allocation.service.exception.InvalidNameException;
+import com.project.professor.allocation.service.exception.NameAlreadyExistsException;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -73,12 +75,16 @@ public class CourseController {
 			@ApiResponse(code = 400, message = "Bad Request") })
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Course> save(@RequestBody Course course) {
+	public ResponseEntity<Course> save(@RequestBody Course course) throws NameAlreadyExistsException {
 		try {
 			course = courseService.save(course);
 			return new ResponseEntity<Course>(course, HttpStatus.CREATED);
-		} catch (Exception e) {
+		} catch (InvalidNameException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch(NameAlreadyExistsException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
