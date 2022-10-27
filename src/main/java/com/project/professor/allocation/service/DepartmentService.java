@@ -2,9 +2,6 @@ package com.project.professor.allocation.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
-import com.project.professor.allocation.entity.Course;
 import com.project.professor.allocation.entity.Department;
 import com.project.professor.allocation.repository.DepartmentRepository;
 import com.project.professor.allocation.repository.ProfessorRepository;
@@ -12,6 +9,8 @@ import com.project.professor.allocation.service.exception.AllocationExistsExcept
 import com.project.professor.allocation.service.exception.EntityNotFoundException;
 import com.project.professor.allocation.service.exception.InvalidNameException;
 import com.project.professor.allocation.service.exception.NameAlreadyExistsException;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class DepartmentService {
