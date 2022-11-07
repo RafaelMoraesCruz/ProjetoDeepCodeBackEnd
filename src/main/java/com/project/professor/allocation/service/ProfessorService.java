@@ -87,7 +87,7 @@ public class ProfessorService {
 	}
 
 	public boolean professorValidation(Professor professor) {
-		if (professor.getName().isEmpty() || professor.getName().length() < 3) {
+		if (professor.getName().isEmpty() || professor.getName().length() < 3 || professor.getCpf().isEmpty() || professor.getCpf().length() < 11) {
 			return false;
 		} else {
 			return true;
