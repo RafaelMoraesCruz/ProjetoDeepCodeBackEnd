@@ -54,7 +54,7 @@ public class ProfessorService {
 
 	public Professor update(Professor professor) {
 		if (professor.getId() != null && professorRepository.existsById(professor.getId())
-				&& professorValidation(professor)) {
+				&& professorValidationName(professor)) {
 			return saveInternal(professor);
 		} else {
 			return null;
@@ -63,9 +63,9 @@ public class ProfessorService {
 
 	public void deleteById(Long id) throws EntityNotFoundException, AllocationExistsException {
 		if (id != null && professorRepository.existsById(id)) {
-			if (allocationRepository.findByProfessorId(id).size()>0) {
+			if (allocationRepository.findByProfessorId(id).size() > 0) {
 				throw new AllocationExistsException("This professor have allocation");
-				
+
 			} else {
 				professorRepository.deleteById(id);
 			}
@@ -86,8 +86,17 @@ public class ProfessorService {
 		professorRepository.deleteAllInBatch();
 	}
 
-	public boolean professorValidation(Professor professor) {
-		if (professor.getName().isEmpty() || professor.getName().length() < 3 || professor.getCpf().isEmpty() || professor.getCpf().length() < 11) {
+	public boolean professorValidationName(Professor professor) {
+		if (professor.getName().isEmpty() || professor.getName().length() < 3) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean professorValidationCPF(Professor professor) {
+		if (professor.getCpf().isEmpty() || professor.getName().length() < 11
+				|| findByCpf(professor.getCpf()).getCpf().isEmpty()) {
 			return false;
 		} else {
 			return true;
@@ -96,7 +105,7 @@ public class ProfessorService {
 
 	public Professor saveInternal(Professor professor) {
 
-		if (professorValidation(professor)) {
+		if (professorValidationName(professor) && professorValidationCPF(professor)) {
 			Long dptId = professor.getDepartmentId();
 			Department dpt = departmentService.findById(dptId);
 
