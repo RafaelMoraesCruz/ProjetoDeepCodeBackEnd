@@ -95,8 +95,10 @@ public class ProfessorService {
 	}
 
 	public boolean professorValidationCPF(Professor professor) {
-		if (professor.getCpf().isEmpty() || professor.getName().length() < 11
-				|| findByCpf(professor.getCpf()).getCpf().isEmpty()) {
+
+		// TEM QUE CORRIGIR PARA SALVAR SOMENTE NUMEROS NO BANCO SEM MASCARA DO CPF para
+		// mudar a validação do tamanho do cpf
+		if (professor.getCpf().isEmpty() || professor.getCpf().length() < 14 || findByCpf(professor.getCpf()) != null) {
 			return false;
 		} else {
 			return true;
