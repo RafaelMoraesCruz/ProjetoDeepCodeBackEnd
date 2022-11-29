@@ -105,9 +105,7 @@ public class ProfessorService {
 		// update
 		if (professor.getId() == findByCpf(professor.getCpf()).getId()) {
 			if (professor.getCpf().isEmpty() || professor.getCpf().length() != 11
-					
-					|| (findByCpf(professor.getCpf()) != null) && findByCpf(professor.getCpf()).getId() != professor.getId()) {
-				
+					|| ((findByCpf(professor.getCpf()) != null) && findByCpf(professor.getCpf()).getId() != professor.getId())) {
 				return false;
 			} else {
 				return true;
