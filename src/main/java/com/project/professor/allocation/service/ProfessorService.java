@@ -102,30 +102,15 @@ public class ProfessorService {
 	}
 
 	public boolean professorValidationCPF(Professor professor) {
-		// update
-		if (professor.getId() == findByCpf(professor.getCpf()).getId()) {
 			if (professor.getCpf().isEmpty() || professor.getCpf().length() != 11
 					|| ((findByCpf(professor.getCpf()) != null) && findByCpf(professor.getCpf()).getId() != professor.getId())) {
 				return false;
 			} else {
 				return true;
 			}
-		}
-		
-		//save
-		else {
-
-			if (professor.getCpf().isEmpty() || professor.getCpf().length() != 11
-					|| findByCpf(professor.getCpf()) != null) {
-				return false;
-			} else {
-				return true;
-			}
-		}
 	}
 
 	public Professor saveInternal(Professor professor) {
-
 		if (professorValidationName(professor) && professorValidationCPF(professor)) {
 			Long dptId = professor.getDepartmentId();
 			Department dpt = departmentService.findById(dptId);
