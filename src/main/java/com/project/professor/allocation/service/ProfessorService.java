@@ -87,7 +87,14 @@ public class ProfessorService {
 	}
 
 	public boolean professorValidationName(Professor professor) {
-		if (professor.getName().isEmpty() || professor.getName().length() < 3) {
+		Professor duplicatedProfessor = null;
+		for (Professor ProfessorFromList: professorRepository.findAll()) {
+			if(ProfessorFromList.getName().equalsIgnoreCase(professor.getName())) {
+				duplicatedProfessor = ProfessorFromList;
+			}
+		}
+		if (professor.getName().isEmpty() || professor.getName().length() < 3 
+				|| duplicatedProfessor != null) {
 			return false;
 		} else {
 			return true;
@@ -95,11 +102,27 @@ public class ProfessorService {
 	}
 
 	public boolean professorValidationCPF(Professor professor) {
+		// update
+		if (professor.getId() == findByCpf(professor.getCpf()).getId()) {
+			if (professor.getCpf().isEmpty() || professor.getCpf().length() != 11
+					
+					|| (findByCpf(professor.getCpf()) != null) && findByCpf(professor.getCpf()).getId() != professor.getId()) {
+				
+				return false;
+			} else {
+				return true;
+			}
+		}
+		
+		//save
+		else {
 
-		if (professor.getCpf().isEmpty() || professor.getCpf().length() < 11 || findByCpf(professor.getCpf()) != null) {
-			return false;
-		} else {
-			return true;
+			if (professor.getCpf().isEmpty() || professor.getCpf().length() != 11
+					|| findByCpf(professor.getCpf()) != null) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}
 
