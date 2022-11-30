@@ -89,7 +89,7 @@ public class ProfessorService {
 	public boolean professorValidationName(Professor professor) {
 		Professor duplicatedProfessor = null;
 		for (Professor ProfessorFromList: professorRepository.findAll()) {
-			if(ProfessorFromList.getName().equalsIgnoreCase(professor.getName())) {
+			if(professor.getId() != ProfessorFromList.getId() && ProfessorFromList.getName().equalsIgnoreCase(professor.getName())) {
 				duplicatedProfessor = ProfessorFromList;
 			}
 		}
